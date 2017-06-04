@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
     "lint": "eslint routes/"
   },
   "pre-commit": [
@@ -23,6 +23,7 @@
     "eslint": "^3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.3.0",
+    "nodemon": "^1.11.0",
     "pre-commit": "^1.2.2"
   }
 }
