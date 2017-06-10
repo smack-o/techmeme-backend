@@ -4,7 +4,7 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get('/', (req, res) => {
-  res.send('respond with a resource');
+  res.render('index', { title: '管理后台' });
 });
 
 module.exports = router;
