@@ -9,7 +9,10 @@ const UserInfoSchema = new Schema({
   about: String,
   social: String,
   collect: [String],
+}, {
+  timestamps: true,
 });
 
-const UserInfo = mongoose.model('UserInfo', UserInfoSchema);
-exports.UserInfo = UserInfo;
+module.exports = mongoose.model('UserInfo', UserInfoSchema);
+// const UserInfo = mongoose.model('UserInfo', UserInfoSchema);
+// exports.UserInfo = UserInfo;
