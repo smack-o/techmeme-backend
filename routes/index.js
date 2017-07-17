@@ -1,4 +1,5 @@
 const express = require('express');
+const rest = require('../comms/restaurantdb');
 
 const router = express.Router();
 
@@ -12,4 +13,5 @@ router.get('/v1', (req, res) => {
 router.get('/v1/home', (req, res) => {
   res.render('index', { title: 'v1/home' });
 });
+router.post('/v1/addRestaurant', rest.addRestaurant);
 module.exports = router;
