@@ -14,4 +14,5 @@ router.get('/v1/home', (req, res) => {
   res.render('index', { title: 'v1/home' });
 });
 router.post('/v1/addRestaurant', rest.addRestaurant);
+router.get('/v1/getRestaurant/:id', rest.getRestaurant);
 module.exports = router;
