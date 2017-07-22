@@ -8,14 +8,10 @@ const RestaurantSchema = new Schema({
   picture: [String],
   topic: String,
   reason: String,
-  comments: [{
-    openId: String,
-    userName: String,
-    avatar: String,
-    contents: String,
-    likes: [String],
-    nominate: [String],
-  }],
+  comments: {
+    type: Schema.Types.ObjectId,
+    ref: 'Comment',
+  },
   address: String,
   longitude: Number,
   latitude: Number,
@@ -24,16 +20,17 @@ const RestaurantSchema = new Schema({
   timestamps: true,
 });
 
-// const commentSchema = new Schema({
-//   openId: String,
-//   userName: String,
-//   avatar: String,
-//   contents: String,
-//   likes: [String],
-//   nominate: [String],
-// });
-// const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
-// const Comments = mongoose.model('Comment', commentSchema);
-module.exports = mongoose.model('Restaurant', RestaurantSchema);
-// exports.Restaurant = Restaurant;
-// exports.Comment = Comments;
+const commentSchema = new Schema({
+  openId: String,
+  userName: String,
+  avatar: String,
+  contents: String,
+  likes: [String],
+  nominate: [String],
+});
+const Restaurant = mongoose.model('Restaurant', RestaurantSchema);
+const Comments = mongoose.model('Comment', commentSchema);
+module.exports = {
+  Restaurant,
+  Comments,
+};
