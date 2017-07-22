@@ -30,6 +30,7 @@ app.all('*', (req, res, next) => {
   res.header('Content-Type', 'application/json;charset=utf-8');
   next();
 });
+
 app.use('/', index);
 app.use('/admin', admin);
 
