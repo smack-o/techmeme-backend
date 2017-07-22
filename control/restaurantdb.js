@@ -24,7 +24,7 @@ async function getRestaurant(req) {
   });
   return results;
 }
-// 增加餐厅信息
+// 发布餐厅信息
 async function addRestaurant(req) {
   const resta = new Restaurant(req.body);
   await resta.save();
