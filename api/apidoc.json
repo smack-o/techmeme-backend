@@ -2,6 +2,6 @@
   "name": "techmeme",
   "version": "0.1.0",
   "description": "apiDoc basic techmeme",
-  "title": "Custom apiDoc browser title",
-  "url" : "https://api.github.com/v1"
+  "title": "techmeme API说明文档",
+  "url" : "https://techmeme.com"
 }
