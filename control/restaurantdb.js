@@ -79,8 +79,9 @@ async function addComment(req) {
   const id = req.params.id;
   const data = req.body;
   let results = {};
-  await Restaurant.findOne({ _id: id }, () => {
+  await Restaurant.findOne({ _id: id }, (err, rest) => {
     const comment = new Comments(data);
+    rest.comments.unshift(comment);
     comment.save(() => {
       results = {
         code: 200,
