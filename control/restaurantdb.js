@@ -2,13 +2,12 @@ const Restaurant = require('../models/restaurant').Restaurant;
 const Comments = require('../models/restaurant').Comments;
 
 // 获取所有的餐厅信息
-async function getAllRestaurant(page) {
+async function getAllRestaurant(page, num) {
   let results = {};
-  const startCount = (page || 1 - 1) * 5;
-  console.warn(startCount);
+  const startCount = (page - 1) * num;
   await Restaurant.find().populate('comments')
   .skip(startCount)
-  .limit(10)
+  .limit(num)
   .sort({ _id: -1 })
   .exec((err, rest) => {
     results = rest;
