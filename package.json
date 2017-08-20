@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "nodemon ./bin/www",
+    "dev": "NODE_ENV=development DEBUG=techmeme-backend*, nodemon ./bin/www",
     "lint": "eslint routes/"
   },
   "pre-commit": [
