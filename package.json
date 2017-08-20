@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development DEBUG=techmeme-backend*, nodemon ./bin/www",
-    "lint": "eslint routes/"
+    "lint": "eslint --fix routes/ models/ control/ utils/"
   },
   "pre-commit": [
     "lint"
@@ -15,11 +15,14 @@
     "cross-env": "^5.0.5",
     "debug": "~2.6.3",
     "express": "~4.15.2",
+    "express-fileupload": "^0.1.4",
     "hbs": "~4.0.1",
     "mongoose": "^4.11.7",
     "mongoose-q": "^0.1.0",
     "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2"
+    "node-qiniu": "^6.2.0",
+    "serve-favicon": "~2.4.2",
+    "uuid": "^3.1.0"
   },
   "devDependencies": {
     "eslint": "^3.19.0",
