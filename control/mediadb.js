@@ -1,19 +1,19 @@
-// const Media = require('../models/media').Media;
-//
-// // 获取所有的餐厅信息
-// async function addMedia() {
-//   // let results = {};
-//   // const startCount = (page - 1) * num;
-//   // await Restaurant.find().populate('comments')
-//   // .skip(startCount)
-//   // .limit(num)
-//   // .sort({ _id: -1 })
-//   // .exec((err, rest) => {
-//   //   results = rest;
-//   // });
-//   // return results;
-// }
-//
-// module.exports = {
-//   getAllRestaurant,
-// };
+const Media = require('../models/media').Media;
+
+async function addMedia(path) {
+  const media = new Media({
+    path,
+  });
+  await media.save();
+  return {
+    status: 200,
+    data: {
+      filename: path,
+    },
+    msg: '图片上传成功',
+  };
+}
+
+module.exports = {
+  addMedia,
+};

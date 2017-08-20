@@ -2,6 +2,7 @@ const express = require('express');
 const upLoadFile = require('../../utils/qiniu');
 const handleRes = require('../../utils').handleRes;
 const uuidv4 = require('uuid/v4');
+const mediadb = require('../../control/mediadb');
 
 const router = new express.Router();
 
@@ -10,13 +11,7 @@ router.post('/', async (req, res) => {
   let result = {};
   try {
     const reply = await upLoadFile(uuidv4(), file.data);
-    result = {
-      status: 200,
-      data: {
-        filename: reply.key,
-      },
-      msg: '上传成功',
-    };
+    result = await mediadb.addMedia(reply.key);
   } catch (error) {
     result.error = error;
   }
