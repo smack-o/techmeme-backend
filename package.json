@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development DEBUG=techmeme-backend*, nodemon ./bin/www",
+    "dev": "cross-env NODE_ENV=development DEBUG=techmeme-backend*, nodemon ./bin/www",
     "lint": "eslint routes/"
   },
   "pre-commit": [
@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
+    "cross-env": "^5.0.5",
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "hbs": "~4.0.1",
