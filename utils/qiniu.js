@@ -22,7 +22,6 @@ function upLoadFile(imageName, buffer) {
         reject(err);
       })
       .on('end', (reply) => {
-        debug(reply);
         resolve(reply);
       });
   });
