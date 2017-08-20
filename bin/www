@@ -93,12 +93,13 @@ function debugEr(er) {
  */
 mongoose.Promise = global.Promise;
 mongoose
-  .connect(config.mongodb)
-  .connection
-  .on('error', debugEr)
-  .once('open', () => {
+  .connect(config.mongodb, {
+    useMongoClient: true,
+  })
+  .then(() => {
     server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);
     debug('server process starting');
-  });
+  })
+  .catch(debugEr);
