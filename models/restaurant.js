@@ -8,6 +8,7 @@ const RestaurantSchema = new Schema({
   picture: [String],
   topic: String,
   reason: String,
+  tips: String,
   comments: {
     type: Schema.Types.ObjectId,
     ref: 'Comment',

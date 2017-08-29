@@ -29,7 +29,7 @@ async function addRestaurant(req) {
   await resta.save();
   return {
     status: 200,
-    data: '餐厅信息保存成功',
+    msg: '餐厅信息保存成功',
   };
 }
 // 删除餐厅信息
@@ -40,14 +40,14 @@ async function deleteRestaurant(req) {
   if (!id) {
     result = {
       status: 404,
-      data: '餐厅信息已经被删除',
+      msg: '餐厅信息已经被删除',
     };
   }
   await Restaurant.findByIdAndRemoveQ(id)
     .then(() => {
       result = {
         status: 200,
-        data: '餐厅信息删除成功',
+        msg: '餐厅信息删除成功',
       };
     });
   return result;
@@ -60,7 +60,7 @@ async function updateRestaurant(req) {
   if (!id) {
     result = {
       status: 404,
-      data: '没有找到该餐厅',
+      msg: '没有找到该餐厅',
     };
   }
   await Restaurant.findByIdQ(id)
@@ -70,22 +70,22 @@ async function updateRestaurant(req) {
   });
   result = {
     status: 200,
-    data: '餐厅信息更新成功',
+    msg: '餐厅信息更新成功',
   };
   return result;
 }
 // 增加评论信息
 async function addComment(req) {
   const id = req.params.id;
-  const data = req.body;
+  const msg = req.body;
   let results = {};
   await Restaurant.findOne({ _id: id }, (err, rest) => {
-    const comment = new Comments(data);
+    const comment = new Comments(msg);
     rest.comments.unshift(comment);
     comment.save(() => {
       results = {
-        code: 200,
-        status: 'ok',
+        status: 200,
+        msg: '增加评论信息成功',
       };
     });
   });
