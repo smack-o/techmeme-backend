@@ -31,9 +31,24 @@ async function getRecommend(req) {
   });
   return results;
 }
-
+// 更新推荐信息
+async function updateRecommend(req) {
+  const id = req.params.id;
+  let results = {};
+  await Recommend.findByIdQ(id)
+  .then((recommend) => {
+    console.warn(recommend);
+    recommend.update(req.body).exec();
+  });
+  results = {
+    status: 200,
+    msg: '推荐信息更新成功',
+  };
+  return results;
+}
 module.exports = {
   addRecommend,
   getAllRecommend,
   getRecommend,
+  updateRecommend,
 };
