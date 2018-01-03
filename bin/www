@@ -6,9 +6,11 @@
 
 const app = require('../app');
 const mongoose = require('mongoose');
-const config = require('./config');
+const mongo = require('../config/techmeme-backend-config').mongo;
 const debug = require('debug')('techmeme-backend:server');
 const http = require('http');
+
+const PRODUCTION = process.env.NODE_ENV === 'production';
 
 /**
  * Create HTTP server.
@@ -91,9 +93,16 @@ function debugEr(er) {
 /**
  * Listen on provided port, on all network interfaces.
  */
+
+let mongodb = 'mongodb://127.0.0.1:27017/hrbust';
+
+if (PRODUCTION) {
+  mongodb = `mongodb://${mongo.user}:${mongo.password}@${mongo.host}:${mongo.port}/${mongo.database}?authSource=${mongo.authSource}`;
+}
+
 mongoose.Promise = global.Promise;
 mongoose
-  .connect(config.mongodb, {
+  .connect(mongodb, {
     useMongoClient: true,
   })
   .then(() => {

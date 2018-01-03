@@ -1,6 +1,6 @@
 const qiniu = require('node-qiniu');
 const stream = require('stream');
-const qiniuConfig = require('../bin/config').qiniu;
+const qiniuConfig = require('../config/techmeme-backend-config.js').qiniu;
 const debug = require('debug')('techmeme-backend:qiniu');
 
 qiniu.config({
