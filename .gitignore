@@ -8,3 +8,5 @@ yarn-error.log*
 
 /bin/config.js
 /bin/db/*
+
+/bin/sh
