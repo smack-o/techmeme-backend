@@ -3,7 +3,7 @@ define({
   "version": "0.1.0",
   "description": "apiDoc basic techmeme",
   "title": "techmeme API说明文档",
-  "url": "https://techmeme.com",
+  "url": "",
   "sampleUrl": false,
   "defaultVersion": "0.0.0",
   "apidoc": "0.3.0",
