@@ -19,6 +19,7 @@ router.use('/api/user', require('./api/userInfo'));
 // 反馈
 router.use('/api/problem', require('./api/problem'));
 
+// 媒体
 router.use('/api/media', require('./api/media'));
 
 module.exports = router;
