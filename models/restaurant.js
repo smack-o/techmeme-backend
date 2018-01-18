@@ -15,8 +15,7 @@ const RestaurantSchema = new Schema({
     ref: 'Comment',
   },
   address: String,
-  longitude: Number,
-  latitude: Number,
+  lng_lat: String,
   businessHours: [String],
 }, {
   timestamps: true,
