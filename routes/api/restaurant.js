@@ -9,14 +9,14 @@ const router = new express.Router();
  * @apiName 发布餐厅信息
  * @apiGroup restaurant
  * @apiParam {String} name 餐厅的名字
+ * @apiParam {String} name_en 餐厅的英文名字
  * @apiParam {Number} price 价格
  * @apiParam {String} picture 图片
  * @apiParam {String} topic 主题
  * @apiParam {String} reason 推荐理由
  * @apiParam {String} address 地点
  * @apiParam {String} businessHours 工作时间
- * @apiParam {Number} longitude 经度
- * @apiParam {Number} latitude 纬度
+ * @apiParam {String} lng_lat 经纬度
  *
  * @apiSuccess {Number} status 状态信息.
  * @apiSuccess {String} data  状态结果.
