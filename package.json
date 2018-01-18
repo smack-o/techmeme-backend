@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development DEBUG=techmeme-backend*, nodemon ./bin/www",
-    "lint": "eslint --fix routes/ models/ control/ utils/"
+    "lint": "eslint --fix routes/ models/ control/ utils/",
+    "doc": "apidoc -i routes/api/ -o public/doc"
   },
   "pre-commit": [
     "lint"

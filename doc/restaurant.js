@@ -12,7 +12,7 @@
 /**
  * @api {post} /v1/addRestaurant 发布餐厅信息
  * @apiName 发布餐厅信息
- * @apiGroup admin
+ * @apiGroup Restaurant
  *
  * @apiParam {String} name 餐厅的名字
  * @apiParam {Number} price 价格
@@ -38,7 +38,7 @@
 /**
  * @api {get} /list/:page 获取所有餐厅信息
  * @apiName 获取所有餐厅信息
- * @apiGroup all
+ * @apiGroup Restaurant
  *
  * @apiParam {Number} page_num 页数
  * @apiParam {Number} page_size 每页数量
@@ -84,7 +84,7 @@
 /**
  * @api {get} /v1/getRestaurant/:id 获取餐厅信息
  * @apiName 获取餐厅信息
- * @apiGroup getRestaurant
+ * @apiGroup Restaurant
  *
  * @apiParam {Number} id 餐厅的ID值
  * @apiSuccess {String} name 餐厅的名字
@@ -128,7 +128,7 @@
 /**
  * @api {put} /v1/updataRestaurant/:id 更新餐厅信息
  * @apiName 更新餐厅信息
- * @apiGroup update
+ * @apiGroup Restaurant
  *
  * @apiParam {Number} id 餐厅的id值
  *
@@ -145,7 +145,7 @@
  /**
  * @api {delete} /v1/deleteRestaurant/:id 删除餐厅信息
  * @apiName 删除餐厅信息
- * @apiGroup delete
+ * @apiGroup Restaurant
  *
  * @apiParam {Number} id 餐厅的id值
  *
