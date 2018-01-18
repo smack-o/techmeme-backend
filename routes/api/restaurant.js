@@ -15,7 +15,7 @@ router.get('/list', (req, res) => {
   const page = req.query.page_num || 1;
   const num = req.query.page_size || 5;
   rest.getAllRestaurant(page, num).then((result) => {
-    console.warn(result);
+    // console.warn(result);
     handleRes(result, res);
   });
 });

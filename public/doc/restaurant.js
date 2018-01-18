@@ -36,11 +36,12 @@
  *
  */
 /**
- * @api {get} /v1/getAll/:page 获取所有餐厅信息
+ * @api {get} /list/:page 获取所有餐厅信息
  * @apiName 获取所有餐厅信息
  * @apiGroup all
  *
- * @apiParam {Number} page 页数
+ * @apiParam {Number} page_num 页数
+ * @apiParam {Number} page_size 每页数量
  *
  * @apiSuccess {String} name 餐厅的名字
  * @apiSuccess {Number} price 价格
