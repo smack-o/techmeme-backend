@@ -8,7 +8,11 @@ qiniu.config({
   secret_key: qiniuConfig.sk,
 });
 
-const imagesBucket = qiniu.bucket(qiniuConfig.bucket);
+const PRODUCTION = process.env.NODE_ENV === 'production';
+
+const bucket = PRODUCTION ? qiniuConfig.bucket : 'test';
+
+const imagesBucket = qiniu.bucket(bucket);
 
 function upLoadFile(imageName, buffer) {
   const promise = new Promise((resolve, reject) => {
