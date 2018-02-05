@@ -14,6 +14,8 @@ const Recommend = new Schema({
   reason: String, // 推荐理由
   restaurant: [String], // 餐厅信息
   top: Boolean,
+}, {
+  timestamps: true,
 });
 
 module.exports = mongoose.model('Recommend', Recommend);
