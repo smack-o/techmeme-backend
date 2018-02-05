@@ -6,7 +6,7 @@ const RestaurantSchema = new Schema({
   name: String,
   name_en: String,
   price: Number,
-  picture: [String],
+  pictures: [String],
   topic: String,
   reason: String,
   tips: String,
@@ -16,7 +16,8 @@ const RestaurantSchema = new Schema({
   },
   address: String,
   lng_lat: String,
-  businessHours: [String],
+  business_hours: [String],
+  contact: String,
 }, {
   timestamps: true,
 });
