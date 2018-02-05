@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-import RestaurantEdit from '@/view/RestaurantEdit/index.vue'
-
+import RestaurantEdit from '@/view/restaurant/edit.vue'
+import RestaurantList from '@/view/restaurant/list.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -17,6 +17,11 @@ export default new Router({
       path: '/restaurant',
       name: 'RestaurantEdit',
       component: RestaurantEdit
+    },
+    {
+      path: '/restaurant/list',
+      name: 'RestaurantList',
+      component: RestaurantList
     }
   ]
 })

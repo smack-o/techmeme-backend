@@ -74,7 +74,7 @@
 </style>
 <script>
 import { addRestaurant } from '@/services/restaurant'
-console.log(addRestaurant)
+
 export default {
   name: 'RestaurantEdit',
   data () {
