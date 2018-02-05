@@ -92,6 +92,13 @@ export default {
         callback()
       }
     }
+    const validateLngLat = (rule, value, callback) => {
+      if (value.split(',').length === 2) {
+        callback()
+      } else {
+        callback(new Error('请填写正确的经纬度信息'))
+      }
+    }
     return {
       form: {
         name: '',
@@ -121,7 +128,7 @@ export default {
           { required: true, message: '请输入详细地址', trigger: 'blur' }
         ],
         lng_lat: [
-          { required: true, message: '请输入餐厅经纬度', trigger: 'blur' }
+          { required: true, validator: validateLngLat, trigger: 'blur' }
         ],
         concat: [
           { required: true, message: '请输入餐厅联系电话', trigger: 'blur' }
@@ -142,15 +149,34 @@ export default {
       console.log(this.form)
       this.$refs.form.validate((valid) => {
         if (valid) {
-          alert('submit!')
+          // alert('submit!')
+          addRestaurant({
+            ...this.form,
+            pictures: this.form.pictures.map(picture => picture.name)
+          }).then((result) => {
+            console.log(result.success)
+            if (result.success) {
+              this.$message({
+                message: '添加成功',
+                type: 'success'
+              })
+            }
+          }).catch(() => {
+            this.$message.error('添加失败')
+          })
         } else {
           console.log('error submit!!')
+          this.$message({
+            message: '信息未填完',
+            type: 'warning'
+          })
           return false
         }
       })
     },
     handlePictureRemove (file, fileList) {
-      console.log(file, fileList)
+      console.log(file, fileList, this.form.pictures)
+      this.form.pictures = this.form.pictures.filter(item => item.url !== file.url)
     },
     handlePictureSuccess (response, file, fileList) {
       this.form.pictures.push({
