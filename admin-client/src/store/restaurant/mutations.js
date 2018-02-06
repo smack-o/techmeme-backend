@@ -5,6 +5,6 @@ export default {
     Message.error(data)
   },
   GET_LIST_SUCCESS (state, data) {
-    state.list = data
+    state.list = data.data
   }
 }

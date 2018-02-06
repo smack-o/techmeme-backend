@@ -15,6 +15,11 @@ module.exports = {
         target: 'http://localhost:3000/',
         changeOrigin: true,
       },
+      '/img': {
+        target: 'http://ouz3wc3vv.bkt.clouddn.com/',
+        pathRewrite: { '^/img': '' },
+        changeOrigin: true,
+      }
     },
 
     // Various Dev Server settings
