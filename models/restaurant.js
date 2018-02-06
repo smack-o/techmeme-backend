@@ -3,21 +3,21 @@ const mongoose = require('mongoose-q')(require('mongoose'));
 const Schema = mongoose.Schema;
 
 const RestaurantSchema = new Schema({
-  name: String,
-  name_en: String,
-  price: Number,
+  name: { type: String, required: true },
+  name_en: { type: String, required: true },
+  price: { type: Number, required: true },
   pictures: [String],
   topic: String,
-  reason: String,
+  reason: { type: String, required: true },
   tips: String,
   comments: {
     type: Schema.Types.ObjectId,
     ref: 'Comment',
   },
-  address: String,
-  lng_lat: String,
-  business_hours: [String],
-  contact: String,
+  address: { type: String, required: true },
+  lng_lat: { type: String, required: true },
+  business_hours: [{ type: String, required: true }],
+  contact: { type: String, required: true },
 }, {
   timestamps: true,
 });
