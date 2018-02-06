@@ -83,8 +83,8 @@ router.post('/', (req, res) => {
  *    }
  */
 router.get('/list', (req, res) => {
-  const page = req.query.page_num || 1;
-  const num = req.query.page_size || 5;
+  const page = Number(req.query.page_num) || 1;
+  const num = Number(req.query.page_size) || 5;
   rest.getAllRestaurant(page, num).then((result) => {
     // console.warn(result);
     handleRes(result, res);
