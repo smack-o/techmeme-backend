@@ -3,15 +3,16 @@ const Comments = require('../models/restaurant').Comments;
 
 // 获取所有的餐厅信息
 async function getAllRestaurant(page, num) {
-  let results = {};
+  const results = {};
   try {
     const startCount = (page - 1) * num;
+    results.count = await Restaurant.count();
     await Restaurant.find().populate('comments')
     .skip(startCount)
     .limit(num)
     .sort({ _id: -1 })
     .exec((err, rest) => {
-      results = rest.map((item) => {
+      results.list = rest.map((item) => {
         const result = item;
         result.pictures = item.pictures.map(picture => `/img/${picture}`);
         return result;
