@@ -13,7 +13,7 @@
         :current-page.sync="currentPage"
         >
       </el-pagination>
-      <router-link class="create-button" :to="{ name: 'Restaurant', params: { id: 'create' }}"><el-button type="primary">新建餐厅</el-button></router-link>
+      <router-link class="button-create" :to="{ name: 'Restaurant', params: { id: 'create' }}"><el-button type="primary">新建餐厅</el-button></router-link>
       <el-card class="list-item" v-for="(item, index) in list" :key="index" :body-style="{ padding: '0px' }">
         <div class="image-wrapper">
           <img :src="`/img/${item.pictures[0]}`" class="image">
@@ -78,7 +78,7 @@
     }
   }
 
-  .create-button {
+  .button-create {
     display: block;
     width: 100%;
     margin: 20px 0 0 20px;
@@ -133,7 +133,17 @@ export default {
       'removeRestaurant'
     ]),
     onRemove (id) {
-      this.removeRestaurant({ id })
+      this.$confirm('此操作将永久删除该餐厅所有信息，包括评论点赞等, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.removeRestaurant({ id })
+        this.getList({
+          page_num: this.currentPage,
+          page_size: this.pageSize
+        })
+      })
     },
     handleTime (date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
