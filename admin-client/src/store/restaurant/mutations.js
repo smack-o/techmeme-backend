@@ -5,7 +5,8 @@ export default {
     Message.error(data)
   },
   GET_LIST_SUCCESS (state, data) {
-    state.list = data.data
+    state.list = data.data.list
+    state.total = data.data.count
   },
   REMOVE_SUCCESS () {
     Message.success('删除成功')
