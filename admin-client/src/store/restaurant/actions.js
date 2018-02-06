@@ -3,10 +3,10 @@ import {
 } from '@/services/restaurant'
 
 export default {
-  fetchAddress ({ commit, state }, data) {
+  getList ({ commit, state }, data) {
     return getRestaurantList(data).then(result => {
       if (result.success) {
-        commit('FETCH_ADDRESS_SUCCESS', result.data)
+        commit('GET_LIST_SUCCESS', result.data)
       } else {
         commit('FAIL', result.message)
       }

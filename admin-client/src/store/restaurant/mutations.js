@@ -1,5 +1,10 @@
+import { Message } from 'element-ui'
+
 export default {
-  FETCH_ADDRESS_SUCCESS (state, data) {
-    state.address = data
+  FAIL (state, data) {
+    Message.error(data)
+  },
+  GET_LIST_SUCCESS (state, data) {
+    state.list = data
   }
 }
