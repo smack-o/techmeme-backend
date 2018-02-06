@@ -19,8 +19,8 @@
       <el-form-item label="详细地址" prop="address">
         <el-input v-model="form.address"></el-input>
       </el-form-item>
-      <el-form-item label="联系电话" prop="concat">
-        <el-input v-model="form.concat"></el-input>
+      <el-form-item label="联系电话" prop="contact">
+        <el-input v-model="form.contact"></el-input>
       </el-form-item>
       <el-form-item label="营业时间" prop="business_hours">
         <el-time-picker
@@ -50,6 +50,7 @@
           :drag="true"
           action="/api/media/"
           list-type="picture-card"
+          :file-list="form.pictures"
           :on-preview="handlePictureCardPreview"
           :on-success="handlePictureSuccess"
           :on-remove="handlePictureRemove">
@@ -107,7 +108,7 @@ export default {
         reason: '',
         address: '',
         lng_lat: '',
-        concat: '',
+        contact: '',
         business_hours: [new Date(2016, 9, 10, 8, 0), new Date(2016, 9, 10, 22, 0)],
         pictures: []
       },
@@ -130,7 +131,7 @@ export default {
         lng_lat: [
           { required: true, validator: validateLngLat, trigger: 'blur' }
         ],
-        concat: [
+        contact: [
           { required: true, message: '请输入餐厅联系电话', trigger: 'blur' }
         ],
         pictures: [
@@ -144,8 +145,24 @@ export default {
       dialogVisible: false
     }
   },
-  created () {
-    this.type = this.$route.params.id ? 'edit' : 'create'
+  async created () {
+    const id = this.$route.params.id
+    this.type = id ? 'edit' : 'create'
+    let restaurantData = this.$store.state.restaurant.list.find(item => item._id === id)
+    if (!restaurantData) {
+      restaurantData = await this.getRestaurant({ id })
+    }
+
+    this.form = {
+      ...this.form,
+      ...restaurantData,
+      pictures: restaurantData.pictures.map(item => {
+        return {
+          name: item,
+          url: item
+        }
+      })
+    }
   },
   methods: {
     ...mapActions('restaurant', [
@@ -156,7 +173,14 @@ export default {
       this.$refs.form.validate((valid) => {
         if (valid) {
           this.addRestaurant({
-            ...this.form,
+            name: this.form.name,
+            name_en: this.form.name_en,
+            price: this.form.price,
+            reason: this.form.reason,
+            address: this.form.address,
+            lng_lat: this.form.lng_lat,
+            contact: this.form.contact,
+            business_hours: this.form.business_hours,
             pictures: this.form.pictures.map(picture => picture.name)
           }).then((result) => {
             if (result) {

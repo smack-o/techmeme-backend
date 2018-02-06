@@ -12,6 +12,12 @@ export const removeRestaurant = data => request({
   data
 })
 
+export const getRestaurant = data => request({
+  url: '/restaurant/:id',
+  method: 'get',
+  data
+})
+
 export const getRestaurantList = data => request({
   url: '/restaurant/list',
   method: 'get',
