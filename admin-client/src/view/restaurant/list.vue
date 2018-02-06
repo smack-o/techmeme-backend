@@ -12,7 +12,7 @@
           <time class="time">更新时间：{{ handleTime(item.updatedAt) }}</time>
           <div class="bottom">
             <router-link :to="{ name: 'Restaurant', params: { id: item._id }}"><el-button type="text" class="button">编辑</el-button></router-link>
-            <!-- <el-button type="text" class="button">操作按钮</el-button> -->
+            <el-button type="text" @click="onRemove(item._id)" class="button button-delete">删除</el-button>
           </div>
         </div>
       </el-card>
@@ -21,14 +21,15 @@
 </template>
 <style media="screen" scoped lang="less">
   .list-wrapper {
+    width: 900px;
     display: flex;
-    justify-content: center;
     flex-wrap: wrap;
     margin-top: 50px;
+    margin: 0 auto;
     .list-item {
-      width: 300px;
+      width: 260px;
       margin: 20px;
-
+      box-sizing: border-box;
       .image {
         width: 100%;
       }
@@ -45,6 +46,13 @@
         display: flex;
         justify-content: flex-end;
       }
+    }
+  }
+
+  .button {
+    margin: 0 5px;
+    &.button-delete {
+      color: #f56c6c;
     }
   }
 </style>
@@ -70,8 +78,12 @@ export default {
   },
   methods: {
     ...mapActions('restaurant', [
-      'getList'
+      'getList',
+      'removeRestaurant'
     ]),
+    onRemove (id) {
+      this.removeRestaurant({ id })
+    },
     handleTime (date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
     }

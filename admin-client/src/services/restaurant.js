@@ -6,6 +6,12 @@ export const addRestaurant = data => request({
   data
 })
 
+export const removeRestaurant = data => request({
+  url: '/restaurant/:id',
+  method: 'delete',
+  data
+})
+
 export const getRestaurantList = data => request({
   url: '/restaurant/list',
   method: 'get',
