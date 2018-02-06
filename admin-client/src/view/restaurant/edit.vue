@@ -48,7 +48,7 @@
         <el-upload
           :multiple="true"
           :drag="true"
-          action="api/media/"
+          action="/api/media/"
           list-type="picture-card"
           :on-preview="handlePictureCardPreview"
           :on-success="handlePictureSuccess"
@@ -60,7 +60,7 @@
         </el-dialog>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即添加</el-button>
+        <el-button type="primary" @click="onSubmit">{{ type === 'create' ? '立即添加': '确定修改'}}</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -73,8 +73,7 @@
   }
 </style>
 <script>
-import { addRestaurant } from '@/services/restaurant'
-
+import { mapActions } from 'vuex'
 export default {
   name: 'RestaurantEdit',
   data () {
@@ -100,6 +99,7 @@ export default {
       }
     }
     return {
+      type: 'create',
       form: {
         name: '',
         name_en: '',
@@ -144,25 +144,32 @@ export default {
       dialogVisible: false
     }
   },
+  created () {
+    this.type = this.$route.params.id ? 'edit' : 'create'
+  },
   methods: {
+    ...mapActions('restaurant', [
+      'getRestaurant',
+      'addRestaurant'
+    ]),
     onSubmit () {
-      console.log(this.form)
       this.$refs.form.validate((valid) => {
         if (valid) {
-          // alert('submit!')
-          addRestaurant({
+          this.addRestaurant({
             ...this.form,
             pictures: this.form.pictures.map(picture => picture.name)
           }).then((result) => {
-            console.log(result.success)
-            if (result.success) {
+            if (result) {
               this.$message({
                 message: '添加成功',
                 type: 'success'
               })
+              this.$router.push({
+                name: 'RestaurantList'
+              })
+            } else {
+              this.$message.error('添加失败')
             }
-          }).catch(() => {
-            this.$message.error('添加失败')
           })
         } else {
           console.log('error submit!!')
@@ -180,7 +187,7 @@ export default {
     },
     handlePictureSuccess (response, file, fileList) {
       this.form.pictures.push({
-        name: response.data.filename,
+        name: response.data.data.filename,
         url: file.url
       })
     },
