@@ -10,7 +10,11 @@ async function getAllRestaurant(page, num) {
   .limit(num)
   .sort({ _id: -1 })
   .exec((err, rest) => {
-    results = rest;
+    results = rest.map((item) => {
+      const result = item;
+      result.pictures = item.pictures.map(picture => `/img/${picture}`);
+      return result;
+    });
   });
   return results;
 }
