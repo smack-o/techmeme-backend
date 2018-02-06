@@ -5,6 +5,14 @@
       <el-breadcrumb-item>餐厅列表</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="list-wrapper">
+      <el-pagination
+        class="list-pagination"
+        layout="total, prev, pager, next, jumper"
+        :page-size="pageSize"
+        :total="12"
+        :current-page.sync="currentPage"
+        >
+      </el-pagination>
       <el-card class="list-item" v-for="(item, index) in list" :key="index" :body-style="{ padding: '0px' }">
         <img :src="item.pictures[0]" class="image">
         <div class="list-info" style="padding: 14px;">
@@ -24,7 +32,7 @@
     width: 900px;
     display: flex;
     flex-wrap: wrap;
-    margin-top: 50px;
+    padding-top: 50px;
     margin: 0 auto;
     .list-item {
       width: 260px;
@@ -47,6 +55,11 @@
         justify-content: flex-end;
       }
     }
+    .list-pagination {
+      width: 100%;
+      // margin: 0 auto;
+      text-align: center;
+    }
   }
 
   .button {
@@ -59,21 +72,44 @@
 <script>
 import { mapActions } from 'vuex'
 import moment from 'moment'
+const PAGE_SIZE = 9
 
 export default {
   name: 'RestaurantEdit',
   data () {
     return {
+      pageSize: PAGE_SIZE,
+      currentPage: 1
+    }
+  },
+  watch: {
+    currentPage (val) {
+      this.getList({
+        page_num: val,
+        page_size: this.pageSize
+      })
+      this.$router.replace({
+        query: {
+          page_num: val
+        }
+      })
     }
   },
   computed: {
     list () {
       return this.$store.state.restaurant.list
+    },
+    total () {
+      return this.$store.state.restaurant.total
     }
   },
   created () {
+    if (this.$route.query.page_num) {
+      this.currentPage = Number(this.$route.query.page_num)
+    }
     this.getList({
-      page_size: 10
+      page_num: this.currentPage,
+      page_size: this.pageSize
     })
   },
   methods: {
