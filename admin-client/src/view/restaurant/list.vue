@@ -13,6 +13,7 @@
         :current-page.sync="currentPage"
         >
       </el-pagination>
+      <router-link class="create-button" :to="{ name: 'Restaurant', params: { id: 'create' }}"><el-button type="primary">新建餐厅</el-button></router-link>
       <el-card class="list-item" v-for="(item, index) in list" :key="index" :body-style="{ padding: '0px' }">
         <div class="image-wrapper">
           <img :src="`/img/${item.pictures[0]}`" class="image">
@@ -75,6 +76,12 @@
     &.button-delete {
       color: #f56c6c;
     }
+  }
+
+  .create-button {
+    display: block;
+    width: 100%;
+    margin: 20px 0 0 20px;
   }
 </style>
 <script>
