@@ -12,11 +12,12 @@ async function getAllRestaurant(page, num) {
     .limit(num)
     .sort({ _id: -1 })
     .exec((err, rest) => {
-      results.list = rest.map((item) => {
-        const result = item;
-        result.pictures = item.pictures.map(picture => `/img/${picture}`);
-        return result;
-      });
+      results.list = rest;
+      // results.list = rest.map((item) => {
+      //   const result = item;
+      //   result.pictures = item.pictures.map(picture => `/img/${picture}`);
+      //   return result;
+      // });
     });
   } catch (e) {
     results.error = e.message;
@@ -28,9 +29,7 @@ function getRestaurant(id) {
   return Restaurant
     .findOne({ _id: id })
     .populate('comments')
-    .exec((err, rest) => Promise.resolve(Object.assign(rest, {
-      pictures: rest.pictures.map(picture => `/img/${picture}`),
-    })))
+    .exec((err, rest) => Promise.resolve(rest))
     .catch(err => Promise.resolve({
       error: err.message,
     }));
