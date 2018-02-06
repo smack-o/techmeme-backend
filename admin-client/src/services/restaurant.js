@@ -23,3 +23,9 @@ export const getRestaurantList = data => request({
   method: 'get',
   data
 })
+
+export const updateRestaurant = data => request({
+  url: '/restaurant/:id',
+  method: 'put',
+  data
+})

@@ -2,7 +2,8 @@ import {
   getRestaurantList,
   addRestaurant,
   getRestaurant,
-  removeRestaurant
+  removeRestaurant,
+  updateRestaurant
 } from '@/services/restaurant'
 
 export default {
@@ -35,6 +36,16 @@ export default {
   },
   removeRestaurant ({ commit, state }, data) {
     return removeRestaurant(data).then(result => {
+      if (result.success) {
+        commit('REMOVE_SUCCESS', result.message)
+        return result
+      } else {
+        commit('FAIL', result.message)
+      }
+    })
+  },
+  updateRestaurant ({ commit, state }, data) {
+    return updateRestaurant(data).then(result => {
       if (result.success) {
         commit('REMOVE_SUCCESS', result.message)
         return result
