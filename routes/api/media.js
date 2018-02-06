@@ -7,13 +7,13 @@ const mediadb = require('../../control/mediadb');
 const router = new express.Router();
 
 router.post('/', async (req, res) => {
-  const file = req.files.file;
   let result = {};
   try {
+    const file = req.files.file;
     const reply = await upLoadFile(uuidv4(), file.data);
     result = await mediadb.addMedia(reply.key);
   } catch (error) {
-    result.error = error;
+    result.error = error.message;
   }
   handleRes(result, res);
 });
