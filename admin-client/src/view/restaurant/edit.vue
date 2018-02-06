@@ -147,21 +147,34 @@ export default {
   },
   async created () {
     const id = this.$route.params.id
-    this.type = id ? 'edit' : 'create'
+
+    if (id === 'create') {
+      this.type = 'create'
+      return
+    }
+    this.type = 'edit'
     let restaurantData = this.$store.state.restaurant.list.find(item => item._id === id)
     if (!restaurantData) {
       restaurantData = await this.getRestaurant({ id })
     }
 
+    if (!restaurantData) {
+      this.$message.error('未找到餐厅信息')
+      this.$router.replace({
+        name: 'RestaurantList'
+      })
+      return
+    }
+
     this.form = {
       ...this.form,
       ...restaurantData,
-      pictures: restaurantData.pictures.map(url => {
+      pictures: restaurantData.pictures ? restaurantData.pictures.map(url => {
         return {
           name: url,
           url: `/img/${url}`
         }
-      })
+      }) : []
     }
   },
   methods: {
