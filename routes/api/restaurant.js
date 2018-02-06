@@ -138,7 +138,7 @@ router.get('/list', (req, res) => {
 
 // 获取餐厅信息(ok)
 router.get('/:id', (req, res) => {
-  rest.getRestaurant(req).then((result) => {
+  rest.getRestaurant(req.params.id).then((result) => {
     handleRes(result, res);
   });
 });
@@ -162,7 +162,7 @@ router.get('/:id', (req, res) => {
 
 // 更新餐厅信息(ok)
 router.put('/:id', (req, res) => {
-  rest.updateRestaurant(req).then((result) => {
+  rest.updateRestaurant(req.params.id, req.body).then((result) => {
     handleRes(result, res);
   });
 });
@@ -186,7 +186,7 @@ router.put('/:id', (req, res) => {
 */
 // 删除餐厅信息(ok)
 router.delete('/:id', (req, res) => {
-  rest.deleteRestaurant(req).then((result) => {
+  rest.deleteRestaurant(req.params.id).then((result) => {
     handleRes(result, res);
   });
 });
