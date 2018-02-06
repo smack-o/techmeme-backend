@@ -28,7 +28,9 @@ function getRestaurant(id) {
   return Restaurant
     .findOne({ _id: id })
     .populate('comments')
-    .exec((err, rest) => Promise.resolve(rest))
+    .exec((err, rest) => Promise.resolve(Object.assign(rest, {
+      pictures: rest.pictures.map(picture => `/img/${picture}`),
+    })))
     .catch(err => Promise.resolve({
       error: err.message,
     }));
