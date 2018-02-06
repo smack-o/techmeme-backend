@@ -14,7 +14,7 @@
         >
       </el-pagination>
       <el-card class="list-item" v-for="(item, index) in list" :key="index" :body-style="{ padding: '0px' }">
-        <img :src="item.pictures[0]" class="image">
+        <img :src="`/img/${item.pictures[0]}`" class="image">
         <div class="list-info" style="padding: 14px;">
           <span>{{item.name}}</span>
           <time class="time">更新时间：{{ handleTime(item.updatedAt) }}</time>

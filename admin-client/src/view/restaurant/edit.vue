@@ -1,7 +1,7 @@
 <template lang="html">
   <el-card class="box-card">
     <div slot="header" class="clearfix">
-      <span>添加餐厅</span>
+      <span>{{ type === 'create' ? '添加': '编辑'}}餐厅</span>
     </div>
     <el-form ref="form" :model="form" :rules="rules" label-width="130px" label-position="top">
       <el-form-item label="餐厅名称" prop="name">
@@ -156,10 +156,10 @@ export default {
     this.form = {
       ...this.form,
       ...restaurantData,
-      pictures: restaurantData.pictures.map(item => {
+      pictures: restaurantData.pictures.map(url => {
         return {
-          name: item,
-          url: item
+          name: url,
+          url: `/img/${url}`
         }
       })
     }
@@ -167,12 +167,13 @@ export default {
   methods: {
     ...mapActions('restaurant', [
       'getRestaurant',
-      'addRestaurant'
+      'addRestaurant',
+      'updateRestaurant'
     ]),
     onSubmit () {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.addRestaurant({
+          const data = {
             name: this.form.name,
             name_en: this.form.name_en,
             price: this.form.price,
@@ -182,27 +183,43 @@ export default {
             contact: this.form.contact,
             business_hours: this.form.business_hours,
             pictures: this.form.pictures.map(picture => picture.name)
+          }
+
+          if (this.type === 'create') {
+            return this.addRestaurant(data).then((result) => {
+              if (result) {
+                this.$message({
+                  message: '添加成功',
+                  type: 'success'
+                })
+                this.$router.push({
+                  name: 'RestaurantList'
+                })
+                return
+              }
+              this.$message.error('添加失败')
+            })
+          }
+          return this.updateRestaurant({
+            ...data,
+            id: this.form._id
           }).then((result) => {
             if (result) {
               this.$message({
-                message: '添加成功',
+                message: '修改成功',
                 type: 'success'
               })
-              this.$router.push({
-                name: 'RestaurantList'
-              })
-            } else {
-              this.$message.error('添加失败')
+              return
             }
+            this.$message.error('修改失败')
           })
-        } else {
-          console.log('error submit!!')
-          this.$message({
-            message: '信息未填完',
-            type: 'warning'
-          })
-          return false
         }
+        console.log('error submit!!')
+        this.$message({
+          message: '信息未填完',
+          type: 'warning'
+        })
+        return false
       })
     },
     handlePictureRemove (file, fileList) {
