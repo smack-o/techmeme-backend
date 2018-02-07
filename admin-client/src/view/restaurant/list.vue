@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="">
-    <el-breadcrumb separator="/">
+    <el-breadcrumb class="bread-wrapper" separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>餐厅列表</el-breadcrumb-item>
     </el-breadcrumb>
@@ -30,60 +30,6 @@
     </div>
   </div>
 </template>
-<style media="screen" scoped lang="less">
-  .list-wrapper {
-    width: 900px;
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 50px;
-    margin: 0 auto;
-    .list-item {
-      width: 260px;
-      margin: 20px;
-      box-sizing: border-box;
-      .image {
-        width: 100%;
-      }
-    }
-    .time {
-      font-size: 13px;
-      color: #999;
-    }
-    .list-info {
-      display: flex;
-      flex-direction: column;
-
-      .bottom {
-        display: flex;
-        justify-content: flex-end;
-      }
-    }
-    .list-pagination {
-      width: 100%;
-      // margin: 0 auto;
-      text-align: center;
-    }
-
-    .image-wrapper {
-      width: 100%;
-      height: 200px;
-      overflow: scroll;
-    }
-  }
-
-  .button {
-    margin: 0 5px;
-    &.button-delete {
-      color: #f56c6c;
-    }
-  }
-
-  .button-create {
-    display: block;
-    width: 100%;
-    margin: 20px 0 0 20px;
-  }
-</style>
 <script>
 import { mapActions } from 'vuex'
 import moment from 'moment'
@@ -151,3 +97,5 @@ export default {
   }
 }
 </script>
+<style media="screen" src="@/assets/restaurant-list.less" scoped lang="less">
+</style>
