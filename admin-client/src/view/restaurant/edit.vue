@@ -1,78 +1,79 @@
 <template lang="html">
-  <el-card class="box-card">
-    <div slot="header" class="clearfix">
-      <span>{{ type === 'create' ? '添加': '编辑'}}餐厅</span>
-    </div>
-    <el-form ref="form" :model="form" :rules="rules" label-width="130px" label-position="top">
-      <el-form-item label="餐厅名称" prop="name">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="餐厅英文名称" prop="name_en">
-        <el-input v-model="form.name_en"></el-input>
-      </el-form-item>
-      <el-form-item label="平均消费（人民币/人）" prop="price">
-        <el-input v-model="form.price"></el-input>
-      </el-form-item>
-      <el-form-item label="推荐理由" prop="reason">
-        <el-input type="textarea" v-model="form.reason"></el-input>
-      </el-form-item>
-      <el-form-item label="详细地址" prop="address">
-        <el-input v-model="form.address"></el-input>
-      </el-form-item>
-      <el-form-item label="联系电话" prop="contact">
-        <el-input v-model="form.contact"></el-input>
-      </el-form-item>
-      <el-form-item label="营业时间" prop="business_hours">
-        <el-time-picker
-          v-model="form.business_hours[0]"
-          placeholder="营业开始时间">
-        </el-time-picker>
-        <el-time-picker
-          arrow-control
-          v-model="form.business_hours[1]"
-          :picker-options="{
-            minTime: form.business_hours[0]
-          }"
-          placeholder="营业结束时间">
-        </el-time-picker>
-      </el-form-item>
-      <el-form-item prop="lng_lat">
-        <span slot="label">
-          <span>经纬度</span>
-          <span>（请去<a target="_blank" href="http://api.map.baidu.com/lbsapi/getpoint/index.html">百度地图</a>标记地点，将经纬度复制到此输入框）</span>
-        </span>
-        <el-input v-model="form.lng_lat"></el-input>
-      </el-form-item>
-      <el-form-item prop="pictures">
-        <span slot="label">上传封面图片（可拖拽，可多张）</span>
-        <el-upload
-          :multiple="true"
-          :drag="true"
-          action="/api/media/"
-          list-type="picture-card"
-          :file-list="form.pictures"
-          :on-preview="handlePictureCardPreview"
-          :on-success="handlePictureSuccess"
-          :on-remove="handlePictureRemove">
-          <i class="el-icon-plus"></i>
-        </el-upload>
-        <el-dialog :visible.sync="dialogVisible" size="tiny">
-          <img width="100%" :src="dialogImageUrl" alt="">
-        </el-dialog>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">{{ type === 'create' ? '立即添加': '确定修改'}}</el-button>
-      </el-form-item>
-    </el-form>
-  </el-card>
+  <div class="">
+    <el-breadcrumb class="bread-wrapper" separator="/">
+      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'RestaurantList' }">餐厅列表</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ type === 'create' ? '添加': '编辑'}}餐厅</el-breadcrumb-item>
+    </el-breadcrumb>
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        <span>{{ type === 'create' ? '添加': '编辑'}}餐厅</span>
+      </div>
+      <el-form ref="form" :model="form" :rules="rules" label-width="130px" label-position="top">
+        <el-form-item label="餐厅名称" prop="name">
+          <el-input v-model="form.name"></el-input>
+        </el-form-item>
+        <el-form-item label="餐厅英文名称" prop="name_en">
+          <el-input v-model="form.name_en"></el-input>
+        </el-form-item>
+        <el-form-item label="平均消费（人民币/人）" prop="price">
+          <el-input v-model="form.price"></el-input>
+        </el-form-item>
+        <el-form-item label="推荐理由" prop="reason">
+          <el-input type="textarea" v-model="form.reason"></el-input>
+        </el-form-item>
+        <el-form-item label="详细地址" prop="address">
+          <el-input v-model="form.address"></el-input>
+        </el-form-item>
+        <el-form-item label="联系电话" prop="contact">
+          <el-input v-model="form.contact"></el-input>
+        </el-form-item>
+        <el-form-item label="营业时间" prop="business_hours">
+          <el-time-picker
+            v-model="form.business_hours[0]"
+            placeholder="营业开始时间">
+          </el-time-picker>
+          <el-time-picker
+            arrow-control
+            v-model="form.business_hours[1]"
+            :picker-options="{
+              minTime: form.business_hours[0]
+            }"
+            placeholder="营业结束时间">
+          </el-time-picker>
+        </el-form-item>
+        <el-form-item prop="lng_lat">
+          <span slot="label">
+            <span>经纬度</span>
+            <span>（请去<a target="_blank" href="http://api.map.baidu.com/lbsapi/getpoint/index.html">百度地图</a>标记地点，将经纬度复制到此输入框）</span>
+          </span>
+          <el-input v-model="form.lng_lat"></el-input>
+        </el-form-item>
+        <el-form-item prop="pictures">
+          <span slot="label">上传封面图片（可拖拽，可多张）</span>
+          <el-upload
+            :multiple="true"
+            :drag="true"
+            action="/api/media/"
+            list-type="picture-card"
+            :file-list="form.pictures"
+            :on-preview="handlePictureCardPreview"
+            :on-success="handlePictureSuccess"
+            :on-remove="handlePictureRemove">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible" size="tiny">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">{{ type === 'create' ? '立即添加': '确定修改'}}</el-button>
+        </el-form-item>
+      </el-form>
+    </el-card>
+  </div>
+
 </template>
-<style media="screen" lang="less">
-  .el-upload-dragger {
-    width: unset;
-    height: unset;
-    border: 0;
-  }
-</style>
 <script>
 import { mapActions } from 'vuex'
 export default {
