@@ -16,7 +16,7 @@
       <router-link class="button-create" :to="{ name: 'Restaurant', params: { id: 'create' }}"><el-button type="primary">新建餐厅</el-button></router-link>
       <el-card class="list-item" v-for="(item, index) in list" :key="index" :body-style="{ padding: '0px' }">
         <div class="image-wrapper">
-          <img :src="`/img/${item.pictures[0]}`" class="image">
+          <img :src="item.pictures[0].url" class="image">
         </div>
         <div class="list-info" style="padding: 14px;">
           <span>{{item.name}}</span>

@@ -169,13 +169,7 @@ export default {
 
     this.form = {
       ...this.form,
-      ...restaurantData,
-      pictures: restaurantData.pictures ? restaurantData.pictures.map(url => {
-        return {
-          name: url,
-          url: `/img/${url}`
-        }
-      }) : []
+      ...restaurantData
     }
   },
   methods: {

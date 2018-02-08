@@ -1,38 +1,36 @@
 const Restaurant = require('../models/restaurant').Restaurant;
 const Comments = require('../models/restaurant').Comments;
+const { restaurantImageUrl } = require('../utils');
 
 // 获取所有的餐厅信息
 async function getAllRestaurant(page, num) {
   const results = {};
-  try {
-    const startCount = (page - 1) * num;
-    results.count = await Restaurant.count();
-    await Restaurant.find().populate('comments')
-    .skip(startCount)
-    .limit(num)
-    .sort({ _id: -1 })
-    .exec((err, rest) => {
-      results.list = rest;
-      // results.list = rest.map((item) => {
-      //   const result = item;
-      //   result.pictures = item.pictures.map(picture => `/img/${picture}`);
-      //   return result;
-      // });
-    });
-  } catch (e) {
-    results.error = e.message;
-  }
+  const startCount = (page - 1) * num;
+
+  results.count = await Restaurant.count();
+  await Restaurant.find().populate('comments')
+  .skip(startCount)
+  .limit(num)
+  .sort({ _id: -1 })
+  .then((rest) => {
+    results.list = rest.map(item => restaurantImageUrl(item._doc));
+  })
+  .catch(err => Promise.resolve({
+    error: err.message,
+  }));
   return results;
 }
+
 // 获取单个餐厅信息
-function getRestaurant(id) {
-  return Restaurant
+async function getRestaurant(id) {
+  const restaurant = await Restaurant
     .findOne({ _id: id })
     .populate('comments')
-    .exec((err, rest) => Promise.resolve(rest))
+    .then(rest => Promise.resolve(restaurantImageUrl(rest._doc)))
     .catch(err => Promise.resolve({
       error: err.message,
     }));
+  return restaurant;
 }
 // 发布餐厅信息
 function addRestaurant(req) {
