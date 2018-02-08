@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development DEBUG=techmeme-backend*, nodemon ./bin/www --ignore admin-client/",
+    "pro": "pm2 start ./bin/www --name 'tansuo'",
     "lint": "eslint --fix routes/ models/ control/ utils/",
     "doc": "apidoc -i routes/api/ -o public/doc",
     "client-dev": "cd admin-client && npm run dev"
