@@ -6,5 +6,8 @@ export default {
   },
   GET_TOPICS_SUCCESS (state, data) {
     state.list = data.data
+  },
+  REMOVE_SUCCESS () {
+    Message.success('删除成功')
   }
 }
