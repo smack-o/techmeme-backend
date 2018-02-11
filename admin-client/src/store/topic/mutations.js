@@ -9,5 +9,8 @@ export default {
   },
   REMOVE_SUCCESS () {
     Message.success('删除成功')
+  },
+  UPDATE_SUCCESS () {
+    Message.success('更新成功')
   }
 }
