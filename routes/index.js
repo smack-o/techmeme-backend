@@ -22,4 +22,7 @@ router.use('/api/problem', require('./api/problem'));
 // 媒体
 router.use('/api/media', require('./api/media'));
 
+// 主题
+router.use('/api/topic', require('./api/topic'));
+
 module.exports = router;
