@@ -5,8 +5,8 @@ export const getTopics = () => request({
   method: 'get'
 })
 
-export const removeRestaurant = data => request({
-  url: '/restaurant/:id',
+export const removeTopic = data => request({
+  url: '/topic/:id',
   method: 'delete',
   data
 })

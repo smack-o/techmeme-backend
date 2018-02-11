@@ -53,10 +53,17 @@ async function getTopicArticles(req) {
   return restaurant;
 }
 
+async function deleteTopic(req) {
+  const id = req.params.id;
+  const result = await Topic.findByIdAndRemoveQ(id);
+  return result;
+}
+
 
 module.exports = {
   addTopic,
   updateTopic,
   getTopicList,
   getTopicArticles,
+  deleteTopic,
 };

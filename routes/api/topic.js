@@ -1,5 +1,5 @@
 const express = require('express');
-const { addTopic, getTopicList, getTopicArticles, updateTopic } = require('../../control/topicdb');
+const { addTopic, getTopicList, getTopicArticles, updateTopic, deleteTopic } = require('../../control/topicdb');
 const { handleRequest } = require('../../utils');
 
 const router = new express.Router();
@@ -104,6 +104,14 @@ router.get('/list', (req, res) => {
 router.get('/:id', (req, res) => {
   handleRequest({
     func: getTopicArticles,
+    req,
+    res,
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  handleRequest({
+    func: deleteTopic,
     req,
     res,
   });
