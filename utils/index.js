@@ -3,7 +3,7 @@ function handleRes(result, res) {
   if (result && result.error) {
     res.status(400).json({
       status: 400,
-      msg: result.error,
+      msg: result.msg || result.error,
     });
     return;
   }
@@ -13,6 +13,18 @@ function handleRes(result, res) {
     msg: 'ok',
   });
 }
+
+const handleRequest = async ({ func, req, res }) => {
+  let result;
+  try {
+    result = await func(req, res);
+  } catch (e) {
+    result = {
+      error: e.message,
+    };
+  }
+  handleRes(result, res);
+};
 
 const concatImageUrl = uuid => `http://ouz3wc3vv.bkt.clouddn.com/${uuid}`;
 
@@ -31,6 +43,7 @@ const restaurantImageUrl = (restaurant) => {
 
 module.exports = {
   handleRes,
+  handleRequest,
   concatImageUrl,
   restaurantImageUrl,
 };
