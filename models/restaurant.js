@@ -18,6 +18,7 @@ const RestaurantSchema = new Schema({
   lng_lat: { type: String, required: true },
   business_hours: [{ type: String, required: true }],
   contact: { type: String, required: true },
+  status: { type: Number, default: 1 },
 }, {
   timestamps: true,
 });
