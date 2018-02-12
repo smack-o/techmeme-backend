@@ -22,7 +22,13 @@
           label="主题创建时间"
           header-align="center"
           align="center"
-        ></el-table-column>
+        >
+        <template slot-scope="scope">
+          <span>
+            {{ handleTime(scope.row.createdAt) }}
+          </span>
+        </template>
+        </el-table-column>
         <el-table-column
           prop="status"
           label="主题状态"
@@ -181,6 +187,16 @@ export default {
     },
     handleTime (date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
+    },
+    handleActive (data) {
+      this.updateTopic({
+        id: data._id,
+        status: data.status === 0 ? 1 : 0
+      }).then((result) => {
+        if (result) {
+          this.getTopics()
+        }
+      })
     }
   }
 }
