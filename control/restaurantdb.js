@@ -12,7 +12,6 @@ async function getAllRestaurant(req) {
   const results = {};
   const startCount = (page - 1) * num;
 
-  results.count = await Restaurant.count();
 
   const query = {};
   if (topic) {
@@ -21,6 +20,7 @@ async function getAllRestaurant(req) {
     const topicData = await Topic.findOne({ _id: topic });
     results.topicName = topicData && topicData.name;
   }
+  results.count = await Restaurant.count(query);
   await Restaurant.find(query).populate('comments')
   .skip(startCount)
   .limit(num)
