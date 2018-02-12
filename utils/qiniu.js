@@ -8,9 +8,10 @@ qiniu.config({
   secret_key: qiniuConfig.sk,
 });
 
-const PRODUCTION = process.env.NODE_ENV === 'production';
+// const PRODUCTION = process.env.NODE_ENV === 'production';
 
-const bucket = PRODUCTION ? qiniuConfig.bucket : 'test';
+// const bucket = PRODUCTION ? qiniuConfig.bucket : 'test';
+const bucket = 'test';
 
 const imagesBucket = qiniu.bucket(bucket);
 
