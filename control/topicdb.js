@@ -1,7 +1,7 @@
 const Topic = require('../models/topic');
 const Restaurant = require('../models/restaurant').Restaurant;
 // const Comments = require('../models/restaurant').Comments;
-const { restaurantImageUrl } = require('../utils');
+const { handleRestaurant } = require('../utils');
 
 // 获取单个餐厅信息
 async function addTopic(req) {
@@ -58,7 +58,7 @@ async function getTopicArticles(req) {
   const restaurant = await Restaurant
     .findOne({ topic: id })
     .populate('comments')
-    .then(rest => Promise.resolve(restaurantImageUrl(rest._doc)))
+    .then(rest => Promise.resolve(handleRestaurant(rest._doc)))
     .catch(err => Promise.resolve({
       error: err.message,
     }));

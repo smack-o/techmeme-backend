@@ -1,7 +1,7 @@
 const Restaurant = require('../models/restaurant').Restaurant;
 const Comments = require('../models/restaurant').Comments;
 const Topic = require('../models/topic');
-const { restaurantImageUrl } = require('../utils');
+const { handleRestaurant } = require('../utils');
 
 // 获取所有的餐厅信息
 async function getAllRestaurant(req) {
@@ -21,16 +21,18 @@ async function getAllRestaurant(req) {
     results.topicName = topicData && topicData.name;
   }
   results.count = await Restaurant.count(query);
-  await Restaurant.find(query).populate('comments')
+  const rest = await Restaurant.find(query).populate('comments')
   .skip(startCount)
   .limit(num)
-  .sort({ _id: -1 })
-  .then((rest) => {
-    results.list = rest.map(item => restaurantImageUrl(item._doc));
-  })
-  .catch(err => Promise.resolve({
-    error: err.message,
-  }));
+  .sort({ _id: -1 });
+
+  const promiseList = rest.map(async (item) => {
+    const doc = item._doc;
+    const topicObj = await Topic.findOne({ _id: doc.topic });
+    doc.topic = topicObj;
+    return Promise.resolve(handleRestaurant(doc));
+  });
+  results.list = await Promise.all(promiseList);
   return results;
 }
 
@@ -39,7 +41,7 @@ async function getRestaurant(id) {
   const restaurant = await Restaurant
     .findOne({ _id: id })
     .populate('comments')
-    .then(rest => Promise.resolve(restaurantImageUrl(rest._doc)))
+    .then(rest => Promise.resolve(handleRestaurant(rest._doc)))
     .catch(err => Promise.resolve({
       error: err.message,
     }));

@@ -28,7 +28,7 @@ const handleRequest = async ({ func, req, res }) => {
 
 const concatImageUrl = uuid => `http://ouz3wc3vv.bkt.clouddn.com/${uuid}`;
 
-const restaurantImageUrl = (restaurant) => {
+const handleRestaurant = (restaurant) => {
   if (!restaurant) {
     return restaurant;
   }
@@ -45,5 +45,5 @@ module.exports = {
   handleRes,
   handleRequest,
   concatImageUrl,
-  restaurantImageUrl,
+  handleRestaurant,
 };
