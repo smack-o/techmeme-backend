@@ -86,7 +86,7 @@ async function getTopicHomeList() {
   return Promise.all(promiseList).then((values) => {
     topics = topics.map((item, index) => ({
       ...item._doc,
-      articles: values[index],
+      articles: values[index].map(value => handleRestaurant(value)),
     }));
     return Promise.resolve(topics);
   });
