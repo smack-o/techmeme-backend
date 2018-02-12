@@ -9,7 +9,7 @@
         class="list-pagination"
         layout="total, prev, pager, next, jumper"
         :page-size="pageSize"
-        :total="12"
+        :total.sync="total"
         :current-page.sync="currentPage"
         >
       </el-pagination>
@@ -41,7 +41,8 @@ export default {
     return {
       pageSize: PAGE_SIZE,
       currentPage: 1,
-      title: ''
+      title: '',
+      total: 0
     }
   },
   watch: {
@@ -58,9 +59,6 @@ export default {
   computed: {
     list () {
       return this.$store.state.restaurant.list
-    },
-    total () {
-      return this.$store.state.restaurant.total
     }
   },
   created () {
@@ -91,6 +89,7 @@ export default {
         page_size: this.pageSize
       })
       this.title = results.data.topicName || '全部'
+      this.total = results.data.count
     },
     handleTime (date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
