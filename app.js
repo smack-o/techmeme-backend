@@ -15,6 +15,7 @@ app.use(fileUpload());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
+// app.set('views', path.join(__dirname, 'admin-client/dist/static'));
 app.set('view engine', 'hbs');
 
 // uncomment after placing your favicon in /public
@@ -23,7 +24,8 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'admin-client/dist')));
 
 app.all('*', (req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -35,7 +37,9 @@ app.all('*', (req, res, next) => {
 });
 
 app.use('/', index);
-app.use('/admin', admin);
+app.use('/admin', (req, res) => {
+  res.sendfile(path.join(__dirname, 'admin-client/dist/index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
