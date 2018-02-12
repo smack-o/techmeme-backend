@@ -11,6 +11,7 @@ export default {
     return getRestaurantList(data).then(result => {
       if (result.success) {
         commit('GET_LIST_SUCCESS', result.data)
+        return result.data
       } else {
         commit('FAIL', result.message)
       }

@@ -2,7 +2,7 @@
   <div class="">
     <el-breadcrumb class="bread-wrapper" separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>餐厅列表</el-breadcrumb-item>
+      <el-breadcrumb-item>餐厅列表{{title && `（${title}）`}}</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="list-wrapper">
       <el-pagination
@@ -40,17 +40,16 @@ export default {
   data () {
     return {
       pageSize: PAGE_SIZE,
-      currentPage: 1
+      currentPage: 1,
+      title: ''
     }
   },
   watch: {
     currentPage (val) {
-      this.getList({
-        page_num: val,
-        page_size: this.pageSize
-      })
+      this.handleGetList()
       this.$router.replace({
         query: {
+          ...this.$route.query,
           page_num: val
         }
       })
@@ -68,10 +67,7 @@ export default {
     if (this.$route.query.page_num) {
       this.currentPage = Number(this.$route.query.page_num)
     }
-    this.getList({
-      page_num: this.currentPage,
-      page_size: this.pageSize
-    })
+    this.handleGetList()
   },
   methods: {
     ...mapActions('restaurant', [
@@ -85,11 +81,16 @@ export default {
         type: 'warning'
       }).then(() => {
         this.removeRestaurant({ id })
-        this.getList({
-          page_num: this.currentPage,
-          page_size: this.pageSize
-        })
+        this.handleGetList()
       })
+    },
+    async handleGetList () {
+      const results = await this.getList({
+        ...this.$route.query,
+        page_num: this.currentPage,
+        page_size: this.pageSize
+      })
+      this.title = results.data.topicName || '全部'
     },
     handleTime (date) {
       return moment(date).format('YYYY-MM-DD HH:mm:ss')
