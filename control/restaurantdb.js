@@ -26,13 +26,14 @@ async function getAllRestaurant(req) {
   .limit(num)
   .sort({ _id: -1 });
 
-  const promiseList = rest.map(async (item) => {
-    const doc = item._doc;
-    const topicObj = await Topic.findOne({ _id: doc.topic });
-    doc.topic = topicObj;
-    return Promise.resolve(handleRestaurant(doc));
-  });
-  results.list = await Promise.all(promiseList);
+  // const promiseList = rest.map(async (item) => {
+  //   const doc = item._doc;
+  //   const topicObj = await Topic.findOne({ _id: doc.topic });
+  //   doc.topic = topicObj;
+  //   return Promise.resolve(handleRestaurant(doc));
+  // });
+  // results.list = await Promise.all(promiseList);
+  results.list = rest.map(item => handleRestaurant(item._doc));
   return results;
 }
 

@@ -2,18 +2,28 @@
   <div class="">
     <el-breadcrumb class="bread-wrapper" separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ name: 'RestaurantList' }">餐厅列表</el-breadcrumb-item>
-      <el-breadcrumb-item>{{ type === 'create' ? '添加': '编辑'}}餐厅</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'RestaurantList' }">文章列表</el-breadcrumb-item>
+      <el-breadcrumb-item>{{ type === 'create' ? '添加': '编辑'}}文章</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="box-card">
       <div slot="header" class="clearfix">
-        <span>{{ type === 'create' ? '添加': '编辑'}}餐厅</span>
+        <span>{{ type === 'create' ? '添加': '编辑'}}文章</span>
       </div>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px" label-position="top">
-        <el-form-item label="餐厅名称" prop="name">
+        <el-form-item label="文章主题" prop="topic">
+          <el-select v-model="form.topic" placeholder="请选择">
+            <el-option
+              v-for="item in topicList"
+              :key="item._id"
+              :label="item.name"
+              :value="item._id">
+            </el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="文章名称" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="餐厅英文名称" prop="name_en">
+        <el-form-item label="文章英文名称" prop="name_en">
           <el-input v-model="form.name_en"></el-input>
         </el-form-item>
         <el-form-item label="平均消费（人民币/人）" prop="price">
@@ -75,13 +85,13 @@
 
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'RestaurantEdit',
   data () {
     const validatePictures = (rule, value, callback) => {
       if (value.length <= 0) {
-        callback(new Error('请上传至少一张餐厅图片'))
+        callback(new Error('请上传至少一张文章图片'))
       } else {
         callback()
       }
@@ -103,6 +113,7 @@ export default {
     return {
       type: 'create',
       form: {
+        topic: '',
         name: '',
         name_en: '',
         price: '',
@@ -114,11 +125,14 @@ export default {
         pictures: []
       },
       rules: {
+        topic: [
+          { required: true, message: '请选择文章主题', trigger: 'blur' }
+        ],
         name: [
-          { required: true, message: '请输入餐厅名称', trigger: 'blur' }
+          { required: true, message: '请输入文章名称', trigger: 'blur' }
         ],
         name_en: [
-          { required: true, message: '请输入餐厅英文名称', trigger: 'blur' }
+          { required: true, message: '请输入文章英文名称', trigger: 'blur' }
         ],
         price: [
           { required: true, message: '请输入人均消费', trigger: 'blur' }
@@ -133,7 +147,7 @@ export default {
           { required: true, validator: validateLngLat, trigger: 'blur' }
         ],
         contact: [
-          { required: true, message: '请输入餐厅联系电话', trigger: 'blur' }
+          { required: true, message: '请输入文章联系电话', trigger: 'blur' }
         ],
         pictures: [
           { required: true, validator: validatePictures, trigger: 'blur' }
@@ -146,9 +160,14 @@ export default {
       dialogVisible: false
     }
   },
+  computed: {
+    ...mapGetters('topic', {
+      topicList: 'list'
+    })
+  },
   async created () {
     const id = this.$route.params.id
-
+    this.getTopics()
     if (id === 'create') {
       this.type = 'create'
       return
@@ -160,7 +179,7 @@ export default {
     }
 
     if (!restaurantData) {
-      this.$message.error('未找到餐厅信息')
+      this.$message.error('未找到文章信息')
       this.$router.replace({
         name: 'RestaurantList'
       })
@@ -178,18 +197,23 @@ export default {
       'addRestaurant',
       'updateRestaurant'
     ]),
+    ...mapActions('topic', [
+      'getTopics'
+    ]),
     onSubmit () {
       this.$refs.form.validate((valid) => {
         if (valid) {
           const data = {
-            name: this.form.name,
-            name_en: this.form.name_en,
-            price: this.form.price,
-            reason: this.form.reason,
-            address: this.form.address,
-            lng_lat: this.form.lng_lat,
-            contact: this.form.contact,
-            business_hours: this.form.business_hours,
+            // topic: this.form.topic,
+            // name: this.form.name,
+            // name_en: this.form.name_en,
+            // price: this.form.price,
+            // reason: this.form.reason,
+            // address: this.form.address,
+            // lng_lat: this.form.lng_lat,
+            // contact: this.form.contact,
+            // business_hours: this.form.business_hours,
+            ...this.form,
             pictures: this.form.pictures.map(picture => picture.name)
           }
 
