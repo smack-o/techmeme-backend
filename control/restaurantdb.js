@@ -1,14 +1,27 @@
 const Restaurant = require('../models/restaurant').Restaurant;
 const Comments = require('../models/restaurant').Comments;
+const Topic = require('../models/topic');
 const { restaurantImageUrl } = require('../utils');
 
 // 获取所有的餐厅信息
-async function getAllRestaurant(page, num) {
+async function getAllRestaurant(req) {
+  const { page_num, page_size, topic } = req.query;
+  const page = Number(page_num) || 1;
+  const num = Number(page_size) || 5;
+
   const results = {};
   const startCount = (page - 1) * num;
 
   results.count = await Restaurant.count();
-  await Restaurant.find().populate('comments')
+
+  const query = {};
+  if (topic) {
+    // handle topic
+    query.topic = topic;
+    const topicData = await Topic.findOne({ _id: topic });
+    results.topicName = topicData && topicData.name;
+  }
+  await Restaurant.find(query).populate('comments')
   .skip(startCount)
   .limit(num)
   .sort({ _id: -1 })
