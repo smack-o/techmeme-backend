@@ -45,7 +45,11 @@
           label="该主题下所有文章"
           align="center"
           header-align="center"
-        ></el-table-column>
+        >
+          <template slot-scope="scope">
+            <router-link :to="{ name: 'Restaurants', query: { topic: scope.row._id }}"> {{scope.row.articlesCount}} (查看)</router-link>
+          </template>
+        </el-table-column>
         <el-table-column
           label="操作"
           align="center"

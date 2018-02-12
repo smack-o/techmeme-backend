@@ -36,8 +36,20 @@ async function updateTopic(req) {
 }
 
 async function getTopicList() {
-  const topics = await Topic.find();
-  return topics;
+  let topics = await Topic.find();
+  const promiseList = topics.map(async (item) => {
+    const promise = await Restaurant.find({
+      topic: item._id,
+    }).count();
+    return promise;
+  });
+  return Promise.all(promiseList).then((values) => {
+    topics = topics.map((item, index) => ({
+      ...item._doc,
+      articlesCount: values[index],
+    }));
+    return Promise.resolve(topics);
+  });
 }
 
 

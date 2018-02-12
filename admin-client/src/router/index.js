@@ -16,7 +16,7 @@ export default new Router({
     },
     {
       path: '/restaurant/list',
-      name: 'RestaurantList',
+      name: 'Restaurants',
       component: RestaurantList
     },
     {
