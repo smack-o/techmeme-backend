@@ -27,12 +27,8 @@ async function addTopic(req) {
 
 async function updateTopic(req) {
   const id = req.params.id;
-  const { name, status } = req.body;
-  const topics = await Topic.findByIdAndUpdateQ(id, {
-    name,
-    status,
-  });
-  return topics;
+  // const { name, status } = req.body;
+  return Topic.findByIdAndUpdateQ(id, req.body);
 }
 
 async function getTopicList() {
@@ -86,7 +82,7 @@ async function getTopicHomeList() {
   return Promise.all(promiseList).then((values) => {
     topics = topics.map((item, index) => ({
       ...item._doc,
-      articles: values[index].map(value => handleRestaurant(value)),
+      articles: values[index].map(value => handleRestaurant(value._doc)),
     }));
     return Promise.resolve(topics);
   });
