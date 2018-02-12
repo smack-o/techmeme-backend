@@ -1,7 +1,7 @@
 <template>
   <div class="navmenu-wrapper">
     <el-menu
-      default-active="1-1"
+      :default-active="active"
       class="el-menu-vertical-demo"
       @open="handleOpen"
       @close="handleClose">
@@ -10,11 +10,11 @@
           <i class="el-icon-location"></i>
           <span>主题管理</span>
         </template>
-        <router-link tag="div" class="button-create" :to="{ name: 'Topic' }"><el-menu-item index="1-1">主题列表</el-menu-item></router-link>
+        <router-link tag="div" :to="{ name: 'Topic' }"><el-menu-item index="1-1">主题列表</el-menu-item></router-link>
       </el-submenu>
       <el-menu-item index="2">
         <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
+        <router-link slot="title" tag="span" :to="{ name: 'Restaurants' }">全部文章</router-link>
       </el-menu-item>
       <el-menu-item index="3">
         <i class="el-icon-setting"></i>
@@ -39,7 +39,16 @@
   }
 </style>
 <script>
+const ROUTER_INDEX = {
+  'Restaurants': '2',
+  'Topic': '1-1'
+}
 export default {
+  data () {
+    return {
+      active: '1-1'
+    }
+  },
   methods: {
     handleOpen (key, keyPath) {
       console.log(key, keyPath)
@@ -47,6 +56,9 @@ export default {
     handleClose (key, keyPath) {
       console.log(key, keyPath)
     }
+  },
+  created () {
+    this.active = ROUTER_INDEX[this.$route.name]
   }
 }
 </script>
