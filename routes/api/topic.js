@@ -1,5 +1,5 @@
 const express = require('express');
-const { addTopic, getTopicList, getTopicArticles, updateTopic, deleteTopic } = require('../../control/topicdb');
+const { addTopic, getTopicList, getTopicArticles, updateTopic, deleteTopic, getTopicHomeList } = require('../../control/topicdb');
 const { handleRequest } = require('../../utils');
 
 const router = new express.Router();
@@ -82,6 +82,13 @@ router.get('/list', (req, res) => {
   });
 });
 
+router.get('/homelist', (req, res) => {
+  handleRequest({
+    func: getTopicHomeList,
+    req,
+    res,
+  });
+});
 
 /**
  * @api {get} /topic 获取该主题下所有内容

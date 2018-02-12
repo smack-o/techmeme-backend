@@ -71,6 +71,26 @@ async function deleteTopic(req) {
   return result;
 }
 
+async function getTopicHomeList() {
+  let topics = await Topic.find({ status: 1 });
+  const promiseList = topics.map(async (item) => {
+    const promise = await Restaurant
+      .find({
+        topic: item._id,
+        status: 1,
+      })
+      .limit(5)
+      .sort({ _id: -1 });
+    return promise;
+  });
+  return Promise.all(promiseList).then((values) => {
+    topics = topics.map((item, index) => ({
+      ...item._doc,
+      articles: values[index],
+    }));
+    return Promise.resolve(topics);
+  });
+}
 
 module.exports = {
   addTopic,
@@ -78,4 +98,5 @@ module.exports = {
   getTopicList,
   getTopicArticles,
   deleteTopic,
+  getTopicHomeList,
 };
