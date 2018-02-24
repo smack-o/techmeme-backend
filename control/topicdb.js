@@ -51,10 +51,16 @@ async function getTopicList() {
 
 async function getTopicArticles(req) {
   const id = req.params.id;
+  const topic = await Topic.findOne({
+    _id: id,
+  });
   const restaurant = await Restaurant
-    .findOne({ topic: id })
+    .find({ topic: id })
     .populate('comments')
-    .then(rest => Promise.resolve(handleRestaurant(rest._doc)))
+    .then(rest => Promise.resolve({
+      topic,
+      articles: rest.map(item => handleRestaurant(item._doc)),
+    }))
     .catch(err => Promise.resolve({
       error: err.message,
     }));
