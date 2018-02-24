@@ -10,6 +10,9 @@ router.get('/', (req, res) => {
 //  餐厅
 router.use('/api/restaurant', require('./api/restaurant'));
 
+//  推荐
+router.use('/api/recommend', require('./api/recommend'));
+
 // 评论
 router.use('/api/comment', require('./api/comment'));
 

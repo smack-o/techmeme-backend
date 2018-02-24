@@ -11,7 +11,9 @@ async function addRecommend(req) {
 }
 
 // 获取所有的编辑推荐的信息
-async function getAllRecommend(page, num) {
+async function getAllRecommend(req) {
+  const page = req.query.page_num || 1;
+  const num = req.query.page_size || 5;
   let results = {};
   const startCount = (page - 1) * num;
   await Recommend.find().skip(startCount)
