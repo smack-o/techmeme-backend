@@ -151,9 +151,9 @@ export default {
       return
     }
     this.type = 'edit'
-    let restaurantData = this.$store.state.restaurant.list.find(item => item._id === id)
+    let restaurantData = this.$store.state.recommend.list.find(item => item._id === id)
     if (!restaurantData) {
-      restaurantData = await this.getRestaurant({ id })
+      restaurantData = await this.getRecommend({ id })
     }
 
     if (!restaurantData) {
@@ -253,7 +253,7 @@ export default {
               this.$message.error('添加失败')
             })
           }
-          return this.updateRestaurant({
+          return this.updateRecommend({
             ...data,
             id: this.form._id
           }).then((result) => {

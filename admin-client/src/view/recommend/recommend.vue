@@ -19,10 +19,12 @@
           <img :src="item.pictures[0].url" class="image">
         </div>
         <div class="list-info" style="padding: 14px;">
-          <span>{{item.name}}</span>
+          <span>{{item.title}}</span>
+          <span class="time">{{item.subtitle}}</span>
+          <span>{{ item.top ? '置顶' : '' }}</span>
           <time class="time">更新时间：{{ handleTime(item.updatedAt) }}</time>
           <div class="bottom">
-            <router-link :to="{ name: 'Restaurant', params: { id: item._id }}"><el-button type="text" class="button">编辑</el-button></router-link>
+            <router-link :to="{ name: 'Recommend', params: { id: item._id }}"><el-button type="text" class="button">编辑</el-button></router-link>
             <el-button type="text" @click="onRemove(item._id)" class="button button-delete">删除</el-button>
           </div>
         </div>
@@ -58,7 +60,7 @@ export default {
   },
   computed: {
     list () {
-      return this.$store.state.restaurant.list
+      return this.$store.state.recommend.list
     }
   },
   created () {
@@ -68,17 +70,17 @@ export default {
     this.handleGetList()
   },
   methods: {
-    ...mapActions('restaurant', [
+    ...mapActions('recommend', [
       'getList',
-      'removeRestaurant'
+      'removeRecommend'
     ]),
     onRemove (id) {
-      this.$confirm('此操作将永久删除该餐厅所有信息，包括评论点赞等, 是否继续?', '提示', {
+      this.$confirm('此操作将永久删除所有信息，包括评论点赞等, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        this.removeRestaurant({ id })
+        this.removeRecommend({ id })
         this.handleGetList()
       })
     },
@@ -88,7 +90,6 @@ export default {
         page_num: this.currentPage,
         page_size: this.pageSize
       })
-      this.title = results.data.topicName || '全部'
       this.total = results.data.count
     },
     handleTime (date) {

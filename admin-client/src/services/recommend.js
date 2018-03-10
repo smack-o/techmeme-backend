@@ -6,26 +6,26 @@ export const addRecommend = data => request({
   data
 })
 
-export const removeRestaurant = data => request({
-  url: '/restaurant/:id',
+export const removeRecommend = data => request({
+  url: '/recommend/:id',
   method: 'delete',
   data
 })
 
-export const getRestaurant = data => request({
-  url: '/restaurant/:id',
+export const getRecommend = data => request({
+  url: '/recommend/:id',
   method: 'get',
   data
 })
 
-export const getRestaurantList = data => request({
-  url: '/restaurant/list',
+export const getRecommendList = data => request({
+  url: '/recommend/list',
   method: 'get',
   data
 })
 
-export const updateRestaurant = data => request({
-  url: '/restaurant/:id',
+export const updateRecommend = data => request({
+  url: '/recommend/:id',
   method: 'put',
   data
 })

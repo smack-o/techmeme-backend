@@ -4,6 +4,7 @@ const {
   getAllRecommend,
   getRecommend,
   updateRecommend,
+  deleteRecommend,
 } = require('../../control/recommenddb');
 const { handleRequest } = require('../../utils');
 
@@ -40,6 +41,14 @@ router.get('/:id', (req, res) => {
 router.put('/:id', (req, res) => {
   handleRequest({
     func: updateRecommend,
+    req,
+    res,
+  });
+});
+
+router.delete('/:id', (req, res) => {
+  handleRequest({
+    func: deleteRecommend,
     req,
     res,
   });
