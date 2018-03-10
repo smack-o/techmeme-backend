@@ -5,6 +5,7 @@ const {
   getRecommend,
   updateRecommend,
   deleteRecommend,
+  getTopRecommends,
 } = require('../../control/recommenddb');
 const { handleRequest } = require('../../utils');
 
@@ -14,6 +15,15 @@ const router = new express.Router();
 router.post('/', (req, res) => {
   handleRequest({
     func: addRecommend,
+    req,
+    res,
+  });
+});
+
+// 获取置顶推荐信息
+router.get('/top', (req, res) => {
+  handleRequest({
+    func: getTopRecommends,
     req,
     res,
   });

@@ -11,19 +11,24 @@
           <span>主题管理</span>
         </template>
         <router-link tag="div" :to="{ name: 'Topic' }"><el-menu-item index="1-1">主题列表</el-menu-item></router-link>
+        <router-link tag="div" :to="{ name: 'Restaurants' }"><el-menu-item index="1-2">
+        文章列表</el-menu-item></router-link>
       </el-submenu>
-      <el-menu-item index="2">
+      <!-- <el-menu-item index="2">
         <router-link slot="title" tag="div" :to="{ name: 'Restaurants' }">
           <i class="el-icon-menu"></i>
           文章列表
         </router-link>
-      </el-menu-item>
-      <el-menu-item index="3">
-        <router-link slot="title" tag="div" :to="{ name: 'Recommends' }">
-          <i class="el-icon-setting"></i>
-          推荐列表
-        </router-link>
-      </el-menu-item>
+      </el-menu-item> -->
+      <el-submenu index="2">
+        <template slot="title">
+          <i class="el-icon-location"></i>
+          <span>推荐管理</span>
+        </template>
+        <router-link tag="div" :to="{ name: 'Recommends' }"><el-menu-item index="2-1">推荐列表</el-menu-item></router-link>
+        <router-link tag="div" :to="{ name: 'Recommends', query: { search: 'top' }}"><el-menu-item index="2-2">
+        首页展示推荐文章</el-menu-item></router-link>
+      </el-submenu>
     </el-menu>
   </div>
 </template>
@@ -44,9 +49,9 @@
 </style>
 <script>
 const ROUTER_INDEX = {
-  'Restaurants': '2',
+  'Restaurants': '1-2',
   'Topic': '1-1',
-  'Recommends': '3'
+  'Recommends': '2-1'
 }
 export default {
   data () {

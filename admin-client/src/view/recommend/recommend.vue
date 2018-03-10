@@ -44,7 +44,8 @@ export default {
       pageSize: PAGE_SIZE,
       currentPage: 1,
       title: '',
-      total: 0
+      total: 0,
+      query: {}
     }
   },
   watch: {
@@ -67,6 +68,13 @@ export default {
     if (this.$route.query.page_num) {
       this.currentPage = Number(this.$route.query.page_num)
     }
+    // if (this.$route.query.top) {
+    //   this.query.top = true
+    // }
+    const searchQuery = { ...this.$route.query }
+    delete searchQuery.page_num
+    delete searchQuery.page_size
+    this.query = { ...searchQuery }
     this.handleGetList()
   },
   methods: {
@@ -88,7 +96,8 @@ export default {
       const results = await this.getList({
         ...this.$route.query,
         page_num: this.currentPage,
-        page_size: this.pageSize
+        page_size: this.pageSize,
+        ...this.query
       })
       this.total = results.data.count
     },

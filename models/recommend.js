@@ -16,7 +16,7 @@ const Recommend = new Schema({
     id: String,
     reason: String,
   }], // 餐厅信息
-  top: { type: Boolean, default: false },
+  top: { type: Number, default: 0 },
   status: { type: Number, default: 0 },
 }, {
   timestamps: true,

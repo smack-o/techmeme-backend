@@ -20,13 +20,17 @@ async function getAllRecommend(req) {
 
   const results = {};
 
+  const searchQuery = { ...req.query };
+  delete searchQuery.page_num;
+  delete searchQuery.page_size;
+
   results.count = await Recommend.count();
   let rest;
   if (!page && !num) {
-    rest = await Recommend.find({}).sort({ _id: -1 });
+    rest = await Recommend.find(searchQuery).sort({ _id: -1 });
   } else {
     const startCount = (page - 1) * num;
-    rest = await Recommend.find({})
+    rest = await Recommend.find(searchQuery)
       .skip(startCount)
       .limit(num)
       .sort({ _id: -1 });
@@ -85,10 +89,16 @@ async function deleteRecommend(req) {
   return result;
 }
 
+async function getTopRecommends() {
+  const results = await Recommend.find({ top: true });
+  return results.map(item => handleRestaurant(item._doc));
+}
+
 module.exports = {
   addRecommend,
   getAllRecommend,
   getRecommend,
   updateRecommend,
   deleteRecommend,
+  getTopRecommends,
 };
