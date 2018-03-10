@@ -19,7 +19,7 @@
         </router-link>
       </el-menu-item>
       <el-menu-item index="3">
-        <router-link slot="title" tag="div" :to="{ name: 'Recommend' }">
+        <router-link slot="title" tag="div" :to="{ name: 'Recommends' }">
           <i class="el-icon-setting"></i>
           主题列表
         </router-link>
