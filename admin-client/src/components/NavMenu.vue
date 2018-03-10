@@ -15,13 +15,13 @@
       <el-menu-item index="2">
         <router-link slot="title" tag="div" :to="{ name: 'Restaurants' }">
           <i class="el-icon-menu"></i>
-          全部文章
+          文章列表
         </router-link>
       </el-menu-item>
       <el-menu-item index="3">
         <router-link slot="title" tag="div" :to="{ name: 'Recommends' }">
           <i class="el-icon-setting"></i>
-          主题列表
+          推荐列表
         </router-link>
       </el-menu-item>
     </el-menu>
