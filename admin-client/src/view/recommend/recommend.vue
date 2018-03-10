@@ -15,13 +15,15 @@
       </el-pagination>
       <router-link class="button-create" :to="{ name: 'Recommend', params: { id: 'create' }}"><el-button type="primary">新建推荐文章</el-button></router-link>
       <el-card class="list-item" v-for="(item, index) in list" :key="index" :body-style="{ padding: '0px' }">
+        <div class="top-icon" v-if="item.top === 1">
+          置顶
+        </div>
         <div class="image-wrapper">
           <img :src="item.pictures[0].url" class="image">
         </div>
         <div class="list-info" style="padding: 14px;">
           <span>{{item.title}}</span>
           <span class="time">{{item.subtitle}}</span>
-          <span>{{ item.top ? '置顶' : '' }}</span>
           <time class="time">更新时间：{{ handleTime(item.updatedAt) }}</time>
           <div class="bottom">
             <router-link :to="{ name: 'Recommend', params: { id: item._id }}"><el-button type="text" class="button">编辑</el-button></router-link>
@@ -57,6 +59,9 @@ export default {
           page_num: val
         }
       })
+    },
+    $route (val) {
+      this.handleGetList()
     }
   },
   computed: {
@@ -68,13 +73,6 @@ export default {
     if (this.$route.query.page_num) {
       this.currentPage = Number(this.$route.query.page_num)
     }
-    // if (this.$route.query.top) {
-    //   this.query.top = true
-    // }
-    const searchQuery = { ...this.$route.query }
-    delete searchQuery.page_num
-    delete searchQuery.page_size
-    this.query = { ...searchQuery }
     this.handleGetList()
   },
   methods: {
@@ -93,11 +91,16 @@ export default {
       })
     },
     async handleGetList () {
+      const searchQuery = { ...this.$route.query }
+      delete searchQuery.page_num
+      delete searchQuery.page_size
+      const query = { ...searchQuery }
+
       const results = await this.getList({
         ...this.$route.query,
         page_num: this.currentPage,
         page_size: this.pageSize,
-        ...this.query
+        ...query
       })
       this.total = results.data.count
     },

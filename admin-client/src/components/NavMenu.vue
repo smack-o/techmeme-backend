@@ -26,7 +26,7 @@
           <span>推荐管理</span>
         </template>
         <router-link tag="div" :to="{ name: 'Recommends' }"><el-menu-item index="2-1">推荐列表</el-menu-item></router-link>
-        <router-link tag="div" :to="{ name: 'Recommends', query: { search: 'top' }}"><el-menu-item index="2-2">
+        <router-link tag="div" :to="{ name: 'Recommends', query: { top: 1 }}"><el-menu-item index="2-2">
         首页展示推荐文章</el-menu-item></router-link>
       </el-submenu>
     </el-menu>

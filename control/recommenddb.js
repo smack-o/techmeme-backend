@@ -27,13 +27,13 @@ async function getAllRecommend(req) {
   results.count = await Recommend.count();
   let rest;
   if (!page && !num) {
-    rest = await Recommend.find(searchQuery).sort({ _id: -1 });
+    rest = await Recommend.find(searchQuery).sort({ top: -1, _id: -1 });
   } else {
     const startCount = (page - 1) * num;
     rest = await Recommend.find(searchQuery)
+      .sort({ top: -1, _id: -1 })
       .skip(startCount)
-      .limit(num)
-      .sort({ _id: -1 });
+      .limit(num);
   }
 
   // const promiseList = rest.map(async (item) => {
