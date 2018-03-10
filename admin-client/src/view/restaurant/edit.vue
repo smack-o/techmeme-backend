@@ -2,7 +2,7 @@
   <div class="">
     <el-breadcrumb class="bread-wrapper" separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ name: 'RestaurantList' }">文章列表</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ name: 'Restaurants' }">文章列表</el-breadcrumb-item>
       <el-breadcrumb-item>{{ type === 'create' ? '添加': '编辑'}}文章</el-breadcrumb-item>
     </el-breadcrumb>
     <el-card class="box-card">
@@ -181,7 +181,7 @@ export default {
     if (!restaurantData) {
       this.$message.error('未找到文章信息')
       this.$router.replace({
-        name: 'RestaurantList'
+        name: 'Restaurants'
       })
       return
     }
@@ -225,7 +225,7 @@ export default {
                   type: 'success'
                 })
                 this.$router.push({
-                  name: 'RestaurantList'
+                  name: 'Restaurants'
                 })
                 return
               }
