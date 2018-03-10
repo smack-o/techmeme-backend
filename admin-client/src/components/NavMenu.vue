@@ -45,7 +45,8 @@
 <script>
 const ROUTER_INDEX = {
   'Restaurants': '2',
-  'Topic': '1-1'
+  'Topic': '1-1',
+  'Recommends': '3'
 }
 export default {
   data () {
