@@ -13,12 +13,16 @@
         <router-link tag="div" :to="{ name: 'Topic' }"><el-menu-item index="1-1">主题列表</el-menu-item></router-link>
       </el-submenu>
       <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <router-link slot="title" tag="span" :to="{ name: 'Restaurants' }">全部文章</router-link>
+        <router-link slot="title" tag="div" :to="{ name: 'Restaurants' }">
+          <i class="el-icon-menu"></i>
+          全部文章
+        </router-link>
       </el-menu-item>
       <el-menu-item index="3">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航三</span>
+        <router-link slot="title" tag="div" :to="{ name: 'Recommend' }">
+          <i class="el-icon-setting"></i>
+          主题列表
+        </router-link>
       </el-menu-item>
     </el-menu>
   </div>
