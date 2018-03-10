@@ -10,8 +10,6 @@ async function getAllRestaurant(req) {
   const num = Number(page_size) || 5;
 
   const results = {};
-  const startCount = (page - 1) * num;
-
 
   const query = {};
   if (topic) {
@@ -21,10 +19,16 @@ async function getAllRestaurant(req) {
     results.topicName = topicData && topicData.name;
   }
   results.count = await Restaurant.count(query);
-  const rest = await Restaurant.find(query).populate('comments')
-  .skip(startCount)
-  .limit(num)
-  .sort({ _id: -1 });
+  let rest;
+  if (!page && !num) {
+    rest = await Restaurant.find(query).populate('comments').sort({ _id: -1 });
+  } else {
+    const startCount = (page - 1) * num;
+    rest = await Restaurant.find(query).populate('comments')
+    .skip(startCount)
+    .limit(num)
+    .sort({ _id: -1 });
+  }
 
   // const promiseList = rest.map(async (item) => {
   //   const doc = item._doc;
