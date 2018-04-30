@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 
-const index = require('./routes/index');
+const api = require('./routes/api');
 const admin = require('./routes/admin');
 
 const app = express();
@@ -36,10 +36,8 @@ app.all('*', (req, res, next) => {
   next();
 });
 
-app.use('/', index);
-app.use('/admin', (req, res) => {
-  res.sendfile(path.join(__dirname, 'admin-client/dist/index.html'));
-});
+app.use('/api', api);
+app.use('*', admin);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
