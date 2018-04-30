@@ -49,8 +49,8 @@ export default {
           this.login({
             username: this.formLabelAlign.username,
             password: this.formLabelAlign.password
-          }).then(() => {
-            this.getUser().then(success => {
+          }).then(success => {
+            success && this.getUser().then(success => {
               if (success) {
                 this.$message('登陆成功')
                 this.$router.push('/')

@@ -19,8 +19,10 @@ export default {
     return login(data).then(result => {
       if (result.success) {
         commit('LOGIN_SUCCESS')
+        return true
       } else {
         commit('FAIL', result.message)
+        return false
       }
     })
   },
