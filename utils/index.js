@@ -1,10 +1,13 @@
+const config = require('../config/techmeme-backend-config');
+
+const PRODUCTION = process.env.NODE_ENV === 'production';
+
 // 处理响应信息
 function handleRes(result, res) {
   if (result && result.error) {
-    res.status(400).json({
-      status: 400,
+    res.status(result.status || 400).json({
       error: result.error,
-      msg: result.msg,
+      msg: result.msg || result.error,
     });
     return;
   }
@@ -21,7 +24,8 @@ const handleRequest = async ({ func, req, res }) => {
     result = await func(req, res);
   } catch (e) {
     result = {
-      error: e.message,
+      error: e,
+      msg: e.message,
     };
   }
   handleRes(result, res);
@@ -42,9 +46,20 @@ const handleRestaurant = (restaurant) => {
   };
 };
 
+let mongodb = 'mongodb://127.0.0.1:27017/techmeme';
+let sessionSecret = 'test';
+
+if (PRODUCTION) {
+  const mongo = config.mongo;
+  mongodb = `mongodb://${mongo.user}:${mongo.password}@${mongo.host}:${mongo.port}/${mongo.database}?authSource=${mongo.authSource}`;
+  sessionSecret = config.sessionSecret;
+}
+
 module.exports = {
   handleRes,
   handleRequest,
   concatImageUrl,
   handleRestaurant,
+  mongodb,
+  sessionSecret,
 };

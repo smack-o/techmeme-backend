@@ -6,11 +6,9 @@
 
 const app = require('../app');
 const mongoose = require('mongoose');
-const mongo = require('../config/techmeme-backend-config').mongo;
+const { mongodb } = require('../utils');
 const debug = require('debug')('techmeme-backend:server');
 const http = require('http');
-
-const PRODUCTION = process.env.NODE_ENV === 'production';
 
 /**
  * Create HTTP server.
@@ -80,9 +78,9 @@ function onError(error) {
 function onListening() {
   const addr = server.address();
   const bind = typeof addr === 'string'
-    ? `pipe ${addr}`
-    : `port ${addr.port}`;
-  debug(`Listening on ${bind}`);
+    ? addr
+    : addr.port;
+  debug(`Listening on http://localhost:${bind}`);
 }
 /**
  * 处理错误
@@ -93,12 +91,6 @@ function debugEr(er) {
 /**
  * Listen on provided port, on all network interfaces.
  */
-
-let mongodb = 'mongodb://127.0.0.1:27017/techmeme';
-
-if (PRODUCTION) {
-  mongodb = `mongodb://${mongo.user}:${mongo.password}@${mongo.host}:${mongo.port}/${mongo.database}?authSource=${mongo.authSource}`;
-}
 
 mongoose.Promise = global.Promise;
 mongoose

@@ -1,5 +1,9 @@
 <template>
   <div class="navmenu-wrapper">
+    <div class="user-info">
+      账号: {{username}}
+      <router-link class="logout" tag="span" :to="{ name: 'Logout' }">登出</router-link>
+    </div>
     <el-menu
       :default-active="active"
       class="el-menu-vertical-demo"
@@ -43,8 +47,18 @@
     background-color: @ColorWhite;
   }
   .el-menu-vertical-demo {
-    padding: 30px 0;
     height: 100%;
+  }
+  .logout {
+    color: blue;
+    cursor: pointer;
+  }
+  .user-info {
+    text-align: center;
+    padding: 10px 0;
+    border-bottom: solid 1px #e6e6e6;
+    border-right: solid 1px #e6e6e6;
+    // border-bottom: 1px solid gray;
   }
 </style>
 <script>
@@ -65,6 +79,11 @@ export default {
     },
     handleClose (key, keyPath) {
       console.log(key, keyPath)
+    }
+  },
+  computed: {
+    username () {
+      return this.$store.state.user.username
     }
   },
   created () {

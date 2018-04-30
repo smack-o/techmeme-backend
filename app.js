@@ -5,6 +5,9 @@ const logger = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const { mongodb, sessionSecret } = require('./utils');
 
 const api = require('./routes/api');
 const admin = require('./routes/admin');
@@ -13,6 +16,13 @@ const app = express();
 
 app.use(fileUpload());
 
+app.use(session({
+  secret: sessionSecret,
+  store: new MongoStore({ url: mongodb }),
+  cookie: {
+    maxAge: 2 * 24 * 60 * 60 * 1000,
+  },
+}));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 // app.set('views', path.join(__dirname, 'admin-client/dist/static'));
