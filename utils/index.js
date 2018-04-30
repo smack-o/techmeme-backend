@@ -3,7 +3,8 @@ function handleRes(result, res) {
   if (result && result.error) {
     res.status(400).json({
       status: 400,
-      msg: result.msg || result.error,
+      error: result.error,
+      msg: result.msg,
     });
     return;
   }

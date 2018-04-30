@@ -2,9 +2,9 @@
   <div class="">
     <el-breadcrumb class="bread-wrapper" separator="/">
       <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>主题列表</el-breadcrumb-item>
+      <el-breadcrumb-item>表天列表</el-breadcrumb-item>
     </el-breadcrumb>
-    <el-button type="primary" @click="createTopic">添加新主题</el-button>
+    <el-button type="primary" @click="createTopic">添加新标签</el-button>
     <div class="list-wrapper">
       <el-table
         :data="list"
@@ -12,14 +12,14 @@
         <el-table-column
           fixed
           prop="name"
-          label="主题名称"
+          label="标签名称"
           width="120"
           header-align="center"
           align="center"
         ></el-table-column>
         <el-table-column
           prop="time"
-          label="主题创建时间"
+          label="标签创建时间"
           header-align="center"
           align="center"
         >
@@ -31,7 +31,7 @@
         </el-table-column>
         <el-table-column
           prop="status"
-          label="主题状态"
+          label="标签状态"
           align="center"
           header-align="center"
         >
@@ -48,7 +48,7 @@
         </el-table-column>
         <el-table-column
           prop="articles"
-          label="该主题下所有文章"
+          label="该标签下所有文章"
           align="center"
           header-align="center"
         >
@@ -69,12 +69,12 @@
         </el-table-column>
       </el-table>
     </div>
-    <el-dialog :title="`${dialogTitle}主题`" :visible.sync="dialogFormVisible">
+    <el-dialog :title="`${dialogTitle}标签`" :visible.sync="dialogFormVisible">
       <el-form ref="form" :model="form" :rules="rules">
-        <el-form-item label="主题名称" prop="name">
+        <el-form-item label="标签名称" prop="name">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
-        <el-form-item label="是否上线该主题">
+        <el-form-item label="是否上线该标签">
           <el-radio-group v-model="form.status">
             <el-radio v-model="form.status" :label="0">不上线</el-radio>
             <el-radio v-model="form.status" :label="1">上线</el-radio>
@@ -93,8 +93,8 @@ import { mapActions, mapGetters } from 'vuex'
 import moment from 'moment'
 
 const STATUS = {
-  0: '主题未上线',
-  1: '主题已上线'
+  0: '标签未上线',
+  1: '标签已上线'
 }
 
 export default {
@@ -112,7 +112,7 @@ export default {
       updateId: '',
       rules: {
         name: [
-          { required: true, message: '请输入主题名称', trigger: 'blur' }
+          { required: true, message: '请输入标签名称', trigger: 'blur' }
         ]
       }
     }
@@ -176,7 +176,7 @@ export default {
       })
     },
     onRemove (id) {
-      this.$confirm('此操作将永久删除该主题所有信息，包括对应文章的主题，评论点赞等, 建议取消激活，不要直接删除，是否继续?', '提示', {
+      this.$confirm('此操作将永久删除该标签所有信息，包括对应文章的标签，评论点赞等, 建议取消激活，不要直接删除，是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

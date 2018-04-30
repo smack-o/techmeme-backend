@@ -10,7 +10,7 @@
         <span>{{ type === 'create' ? '添加': '编辑'}}文章</span>
       </div>
       <el-form ref="form" :model="form" :rules="rules" label-width="130px" label-position="top">
-        <el-form-item label="文章主题" prop="topic">
+        <el-form-item label="文章标签" prop="topic">
           <el-select v-model="form.topic" placeholder="请选择">
             <el-option
               v-for="item in topicList"
@@ -26,8 +26,11 @@
         <el-form-item label="文章英文名称" prop="name_en">
           <el-input v-model="form.name_en"></el-input>
         </el-form-item>
+        <el-form-item label="文章副标题" prop="subtitle">
+          <el-input v-model="form.subtitle"></el-input>
+        </el-form-item>
         <el-form-item label="平均消费（人民币/人）" prop="price">
-          <el-input v-model="form.price"></el-input>
+          <el-input type="number" v-model="form.price"></el-input>
         </el-form-item>
         <el-form-item label="推荐理由" prop="reason">
           <el-input type="textarea" v-model="form.reason"></el-input>
@@ -126,13 +129,16 @@ export default {
       },
       rules: {
         topic: [
-          { required: true, message: '请选择文章主题', trigger: 'blur' }
+          { required: true, message: '请选择文章标签', trigger: 'blur' }
         ],
         name: [
           { required: true, message: '请输入文章名称', trigger: 'blur' }
         ],
         name_en: [
           { required: true, message: '请输入文章英文名称', trigger: 'blur' }
+        ],
+        subtitle: [
+          { required: true, message: '请输入文章副标题', trigger: 'blur' }
         ],
         price: [
           { required: true, message: '请输入人均消费', trigger: 'blur' }

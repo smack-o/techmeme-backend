@@ -8,9 +8,9 @@
       <el-submenu index="1">
         <template slot="title">
           <i class="el-icon-location"></i>
-          <span>主题管理</span>
+          <span>标签管理</span>
         </template>
-        <router-link tag="div" :to="{ name: 'Topic' }"><el-menu-item index="1-1">主题列表</el-menu-item></router-link>
+        <router-link tag="div" :to="{ name: 'Topic' }"><el-menu-item index="1-1">标签列表</el-menu-item></router-link>
         <router-link tag="div" :to="{ name: 'Restaurants' }"><el-menu-item index="1-2">
         文章列表</el-menu-item></router-link>
       </el-submenu>
