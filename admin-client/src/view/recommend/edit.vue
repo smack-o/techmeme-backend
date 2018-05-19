@@ -16,6 +16,26 @@
         <el-form-item label="文章副标题" prop="subtitle">
           <el-input v-model="form.subtitle"></el-input>
         </el-form-item>
+        <el-form-item label="编者" prop="referee.name">
+          <el-input type="textarea" v-model="form.referee.name"></el-input>
+          <!-- refereeAvatar -->
+        </el-form-item>
+        <el-form-item prop="referee.avatar">
+          <span slot="label">上传编者头像(只能上传一张，上传多张只取第一张)</span>
+          <el-upload
+            :drag="true"
+            action="/api/media/"
+            list-type="picture-card"
+            :file-list="form.referee.avatar"
+            :on-preview="handlePictureCardPreview"
+            :on-success="handleAvatarSuccess"
+            :on-remove="handleAvatarRemove">
+            <i class="el-icon-plus"></i>
+          </el-upload>
+          <el-dialog :visible.sync="dialogVisible" size="tiny">
+            <img width="100%" :src="dialogImageUrl" alt="">
+          </el-dialog>
+        </el-form-item>
         <el-form-item label="推荐理由" prop="reason">
           <el-input type="textarea" v-model="form.reason"></el-input>
         </el-form-item>
@@ -43,6 +63,9 @@
           <el-dialog :visible.sync="dialogVisible" size="tiny">
             <img width="100%" :src="dialogImageUrl" alt="">
           </el-dialog>
+        </el-form-item>
+        <el-form-item label="是否置顶为首页展示">
+          <el-switch v-model="form.top"></el-switch>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">{{ type === 'create' ? '立即添加': '确定修改'}}</el-button>
@@ -97,7 +120,12 @@ export default {
         reason: '',
         restaurants: '',
         articles: [],
-        pictures: []
+        pictures: [],
+        referee: {
+          name: '',
+          avatar: []
+        },
+        top: false
       },
       rules: {
         title: [
@@ -110,6 +138,12 @@ export default {
           { required: true, message: '请输入推荐理由', trigger: 'blur' }
         ],
         pictures: [
+          { required: true, validator: validatePictures, trigger: 'blur' }
+        ],
+        'referee.name': [
+          { required: true, message: '请输入编者名字', trigger: 'blur' }
+        ],
+        'referee.avatar': [
           { required: true, validator: validatePictures, trigger: 'blur' }
         ]
       },
@@ -151,10 +185,10 @@ export default {
       return
     }
     this.type = 'edit'
-    let restaurantData = this.$store.state.recommend.list.find(item => item._id === id)
-    if (!restaurantData) {
-      restaurantData = await this.getRecommend({ id })
-    }
+    // let restaurantData = this.$store.state.recommend.list.find(item => item._id === id)
+    // if (!restaurantData) {
+    const restaurantData = await this.getRecommend({ id, editor: 1 })
+    // }
 
     if (!restaurantData) {
       this.$message.error('未找到文章信息')
@@ -163,10 +197,11 @@ export default {
       })
       return
     }
-
+    console.log(restaurantData)
     this.form = {
       ...this.form,
-      ...restaurantData
+      ...restaurantData,
+      top: restaurantData.top === 1
     }
   },
   methods: {
@@ -201,7 +236,6 @@ export default {
             }
             return item
           })
-          console.log(this.options)
         }
       })
     },
@@ -235,9 +269,14 @@ export default {
         if (valid) {
           const data = {
             ...this.form,
-            pictures: this.form.pictures.map(picture => picture.name)
+            pictures: this.form.pictures.map(picture => picture.name),
+            referee: {
+              name: this.form.referee.name,
+              avatar: this.form.referee.avatar[0].name
+            },
+            top: this.form.top ? 1 : 0,
+            editor: 1
           }
-
           if (this.type === 'create') {
             return this.addRecommend(data).then((result) => {
               if (result) {
@@ -276,11 +315,22 @@ export default {
       })
     },
     handlePictureRemove (file, fileList) {
-      console.log(file, fileList, this.form.pictures)
       this.form.pictures = this.form.pictures.filter(item => item.url !== file.url)
     },
     handlePictureSuccess (response, file, fileList) {
       this.form.pictures.push({
+        name: response.data.data.filename,
+        url: file.url
+      })
+    },
+    handleAvatarRemove (file, fileList) {
+      this.form.referee.avatar = this.form.referee.avatar.filter(item => item.url !== file.url)
+    },
+    handleAvatarSuccess (response, file, fileList) {
+      if (!this.form.referee.avatar) {
+        this.form.referee.avatar = []
+      }
+      this.form.referee.avatar.push({
         name: response.data.data.filename,
         url: file.url
       })

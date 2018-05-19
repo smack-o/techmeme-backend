@@ -100,7 +100,8 @@ export default {
         ...this.$route.query,
         page_num: this.currentPage,
         page_size: this.pageSize,
-        ...query
+        ...query,
+        editor: 1
       })
       this.total = results.data.count
     },
