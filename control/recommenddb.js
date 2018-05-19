@@ -24,10 +24,10 @@ async function getAllRecommend(req) {
   delete searchQuery.page_num;
   delete searchQuery.page_size;
 
-  results.count = await Recommend.count();
   let rest;
   if (!page && !num) {
     rest = await Recommend.find(searchQuery).sort({ top: -1, _id: -1 });
+    // results.count
   } else {
     const startCount = (page - 1) * num;
     rest = await Recommend.find(searchQuery)
@@ -36,6 +36,7 @@ async function getAllRecommend(req) {
       .limit(num);
   }
 
+  results.count = rest.length;
   // const promiseList = rest.map(async (item) => {
   //   const doc = item._doc;
   //   const topicObj = await Topic.findOne({ _id: doc.topic });
