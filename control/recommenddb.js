@@ -1,6 +1,6 @@
 const Recommend = require('../models/recommend');
 const { Restaurant } = require('../models/restaurant');
-const { handleRestaurant } = require('../utils');
+const { handleRestaurant, concatImageUrl } = require('../utils');
 
 // 发布编辑推荐信息
 async function addRecommend(req) {
@@ -51,7 +51,19 @@ async function getRecommend(req) {
   const id = req.params.id;
   const result = await Recommend
     .findOne({ _id: id })
-    .then(rest => Promise.resolve(handleRestaurant(rest._doc)))
+    .then((rest) => {
+      const res = handleRestaurant(rest._doc);
+      return Promise.resolve({
+        ...res,
+        referee: {
+          name: res.referee.name,
+          avatar: [{
+            name: res.referee.name,
+            url: concatImageUrl(res.referee.avatar),
+          }],
+        },
+      });
+    })
     .catch(err => Promise.resolve({
       error: err.message,
     }));

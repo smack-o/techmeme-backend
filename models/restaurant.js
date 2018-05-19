@@ -1,3 +1,4 @@
+// Restaurant : 最初设计只有餐厅，字段名一直没有更改
 const mongoose = require('mongoose-q')(require('mongoose'));
 
 const Schema = mongoose.Schema;

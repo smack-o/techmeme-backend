@@ -1,8 +1,10 @@
+// 编辑推荐 城市攻略
 const mongoose = require('mongoose-q')(require('mongoose'));
 
 const Schema = mongoose.Schema;
 
 const Recommend = new Schema({
+  editor: { type: Number, default: 0 }, // 1为编辑推荐 0为达人推荐
   referee: {
     name: String,
     about: String,
@@ -16,8 +18,8 @@ const Recommend = new Schema({
     id: String,
     reason: String,
   }], // 餐厅信息
-  top: { type: Number, default: 0 },
-  status: { type: Number, default: 0 },
+  top: { type: Number, default: 0 }, // 是否置顶
+  status: { type: Number, default: 0 }, // 是否下架
 }, {
   timestamps: true,
 });
