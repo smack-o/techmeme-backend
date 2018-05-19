@@ -6,6 +6,8 @@ import RestaurantList from '@/view/restaurant/list.vue'
 import Topic from '@/view/topic/list.vue'
 import Recommend from '@/view/recommend/recommend.vue'
 import RecommendEdit from '@/view/recommend/edit.vue'
+import CityGuid from '@/view/cityguid/cityguid.vue'
+import CityGuidEdit from '@/view/cityguid/edit.vue'
 import Login from '@/view/Login'
 import store from '@/store'
 import { Message } from 'element-ui'
@@ -60,6 +62,16 @@ const router = new Router({
       path: '/recommend/:id',
       name: 'Recommend',
       component: RecommendEdit
+    },
+    {
+      path: '/cityguid',
+      name: 'CityGuids',
+      component: CityGuid
+    },
+    {
+      path: '/cityguid/:id',
+      name: 'CityGuid',
+      component: CityGuidEdit
     }
   ]
 })
