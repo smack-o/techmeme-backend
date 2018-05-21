@@ -1,4 +1,5 @@
 const config = require('../config/techmeme-backend-config');
+const debug = require('debug')('techmeme-backend:error');
 
 const PRODUCTION = process.env.NODE_ENV === 'production';
 
@@ -23,6 +24,7 @@ const handleRequest = async ({ func, req, res }) => {
   try {
     result = await func(req, res);
   } catch (e) {
+    debug(e);
     result = {
       error: e,
       msg: e.message,

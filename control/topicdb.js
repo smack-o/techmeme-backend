@@ -3,7 +3,7 @@ const Restaurant = require('../models/restaurant').Restaurant;
 // const Comments = require('../models/restaurant').Comments;
 const { handleRestaurant } = require('../utils');
 
-// 获取单个餐厅信息
+// 添加主题
 async function addTopic(req) {
   const { name, status } = req.body;
 
@@ -25,12 +25,14 @@ async function addTopic(req) {
   }));
 }
 
+// 更新主题
 async function updateTopic(req) {
   const id = req.params.id;
   // const { name, status } = req.body;
   return Topic.findByIdAndUpdateQ(id, req.body);
 }
 
+// 获取主题列表
 async function getTopicList() {
   let topics = await Topic.find();
   const promiseList = topics.map(async (item) => {
@@ -48,7 +50,7 @@ async function getTopicList() {
   });
 }
 
-
+// 获取主题下所有文章
 async function getTopicArticles(req) {
   const id = req.params.id;
   const topic = await Topic.findOne({
@@ -67,6 +69,7 @@ async function getTopicArticles(req) {
   return restaurant;
 }
 
+// 删除主题
 async function deleteTopic(req) {
   const id = req.params.id;
   const result = await Topic.findByIdAndRemoveQ(id);

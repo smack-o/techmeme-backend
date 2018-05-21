@@ -70,9 +70,9 @@ async function getRecommend(req) {
     }));
   if (!result.error && result.articles) {
     const promiseList = result.articles.map(async (item) => {
-      const restaurant = await Restaurant.findOne({ _id: item.id }, { name: 1 });
+      const restaurant = await Restaurant.findOne({ _id: item.id });
       return {
-        ...item._doc,
+        ...handleRestaurant(restaurant._doc),
         name: restaurant.name,
       };
     });
