@@ -193,7 +193,7 @@ export default {
     if (!restaurantData) {
       this.$message.error('未找到文章信息')
       this.$router.replace({
-        name: 'Recommends'
+        name: 'CityGuids'
       })
       return
     }
@@ -201,6 +201,10 @@ export default {
     this.form = {
       ...this.form,
       ...restaurantData,
+      articles: restaurantData.articles.map(article => ({
+        name: article.name,
+        id: article._id
+      })),
       top: restaurantData.top === 1
     }
   },
@@ -275,7 +279,7 @@ export default {
               avatar: this.form.referee.avatar[0].name
             },
             top: this.form.top ? 1 : 0,
-            editor: 1
+            editor: 0
           }
           if (this.type === 'create') {
             return this.addRecommend(data).then((result) => {
@@ -285,7 +289,7 @@ export default {
                   type: 'success'
                 })
                 this.$router.push({
-                  name: 'Recommends'
+                  name: 'CityGuids'
                 })
                 return
               }

@@ -189,7 +189,8 @@ export default {
     // if (!restaurantData) {
     const restaurantData = await this.getRecommend({ id, editor: 1 })
     // }
-
+    console.log(restaurantData);
+    // return;
     if (!restaurantData) {
       this.$message.error('未找到文章信息')
       this.$router.replace({
@@ -197,10 +198,13 @@ export default {
       })
       return
     }
-    console.log(restaurantData)
     this.form = {
       ...this.form,
       ...restaurantData,
+      articles: restaurantData.articles.map(article => ({
+        name: article.name,
+        id: article._id
+      })),
       top: restaurantData.top === 1
     }
   },

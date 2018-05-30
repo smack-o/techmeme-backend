@@ -84,7 +84,6 @@ async function getTopicHomeList() {
         topic: item._id,
         status: 1,
       })
-      .limit(5)
       .sort({ _id: -1 });
     return promise;
   });
