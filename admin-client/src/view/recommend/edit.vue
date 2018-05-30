@@ -189,8 +189,7 @@ export default {
     // if (!restaurantData) {
     const restaurantData = await this.getRecommend({ id, editor: 1 })
     // }
-    console.log(restaurantData);
-    // return;
+
     if (!restaurantData) {
       this.$message.error('未找到文章信息')
       this.$router.replace({

@@ -197,7 +197,6 @@ export default {
       })
       return
     }
-    console.log(restaurantData)
     this.form = {
       ...this.form,
       ...restaurantData,
